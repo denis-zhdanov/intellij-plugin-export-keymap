@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.6
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.1.3'
+}
