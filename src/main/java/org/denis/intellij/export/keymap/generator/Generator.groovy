@@ -17,9 +17,8 @@ class Generator {
   
   def generate(@NotNull java.util.List<SectionData> data, @NotNull String outputPath, @NotNull String keymapName) {
     def context = new GenerationContext(outputPath: outputPath, data: data, keymapName: keymapName)
-    doGenerate(context)
-    context.realGenerationIteration = true
-    context.columns.clear()
+    def table = doGenerate(context)
+    context.prepareToRealGeneration(table)
     doGenerate(context)
   }
 
@@ -39,22 +38,9 @@ class Generator {
 
     addData(context)
 
-    PdfPTable headerTable = new PdfPTable(1)
-    headerTable.widthPercentage = 100
-    def headerFont = new Font(FONT_FAMILY, HEADER_FONT_SIZE, Font.BOLD, TITLE_COLOR)
-    def headerCell = new PdfPCell(new Paragraph(Bundle.message("document.header", context.keymapName), headerFont))
-    headerCell.border = Rectangle.NO_BORDER
-    headerTable.addCell(headerCell)
-    document.add(headerTable)
-
     document.add(rootTable)
     document.close()
-
-    // Calculate real row heights. iText doesn't provide an API to do it without flushing the document.
-    if (!context.realGenerationIteration) {
-      rootTable.getRow(0).cells[0].compositeElements.rows*.each { context.rowHeights << it.getCells()[0].height }
-      context.maxTableHeight = document.pageSize.height - headerTable.totalHeight - document.bottomMargin() - document.topMargin()
-    }
+    rootTable
   }
 
   private def addData(@NotNull GenerationContext context) {
@@ -89,6 +75,16 @@ class Generator {
     context.updateColumn(1, {
       tableToUse = new PdfPTable(2)
       tableToUse.widthPercentage = 100
+      
+      // Align data entry with the first data entry at the neighbour columns:
+      //    | Section name   |                      <-- we don't want to add new data entry on this row
+      //    | Key1 | Value 1 |   | KeyN  | ValueN | <-- add it here instead
+      //    | Key2 | Value 2 |
+      def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
+      def emptyCell = new PdfPCell(new Paragraph(" ", font))
+      emptyCell.colspan = 2
+      emptyCell.border = Rectangle.NO_BORDER
+      tableToUse.addCell(emptyCell)
       it.addElement(tableToUse)
     })
 
