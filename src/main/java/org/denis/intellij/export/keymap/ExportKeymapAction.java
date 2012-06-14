@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.keymap.Keymap;
 import com.intellij.openapi.keymap.ex.KeymapManagerEx;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.BalloonBuilder;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -15,6 +16,7 @@ import org.denis.intellij.export.keymap.ui.ExportModel;
 import org.denis.intellij.export.keymap.ui.ExportSettingsControlBuilder;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Denis Zhdanov
@@ -31,7 +33,7 @@ public class ExportKeymapAction extends AnAction {
   public void actionPerformed(AnActionEvent event) {
     Project project = PlatformDataKeys.PROJECT.getData(event.getDataContext());
     if (project == null) {
-      return;
+      project = ProjectManager.getInstance().getDefaultProject();
     }
     ExportModel model = new ExportModel();
     for (Keymap keymap : KeymapManagerEx.getInstanceEx().getAllKeymaps()) {
@@ -44,7 +46,7 @@ public class ExportKeymapAction extends AnAction {
       return;
     }
 
-    builder.createBalloon().show(RelativePoint.getCenterOf((JComponent)frame.getContentPane()), Balloon.Position.above);
-    System.out.println("Called");
+    builder.setShowCallout(false).createBalloon().show(RelativePoint.fromScreen(MouseInfo.getPointerInfo().getLocation()),
+                                                       Balloon.Position.above);
   }
 }

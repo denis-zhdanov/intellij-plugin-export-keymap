@@ -46,7 +46,7 @@ class Generator {
   private def addData(@NotNull GenerationContext context) {
     for (sectionData in context.data) {
       def table = addSection(sectionData.name, context)
-      sectionData.actions.each { table = addRow(table, it.first, it.second, context) }
+      sectionData.actions.each { table = addRow(table, it[0], it[1], context) }
     }
   }
 

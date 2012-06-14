@@ -9,5 +9,5 @@ package org.denis.intellij.export.keymap.generator;
  */
 class SectionData {
   def actions = []
-  def String name = 'asd'
+  def String name
 }
