@@ -7,7 +7,9 @@
   <idea-version since-build="107.105"/>
 
   <actions>
-      <action id="ExportKeymap" class="org.denis.intellij.export.keymap.ExportKeymapAction"/>
+      <action id="ExportKeymap" class="org.denis.intellij.export.keymap.ExportKeymapAction">
+        <add-to-group group-id="ToolsMenu" anchor="last"/>
+      </action>
   </actions>
 
 </idea-plugin>
