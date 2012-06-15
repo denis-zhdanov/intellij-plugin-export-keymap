@@ -1,8 +1,6 @@
 package org.denis.intellij.export.keymap.generator
 
 import org.jetbrains.annotations.NotNull
-import com.intellij.openapi.keymap.KeymapManager
-import com.intellij.openapi.keymap.ex.KeymapManagerEx
 
 /**
  * @author Denis Zhdanov
@@ -10,10 +8,7 @@ import com.intellij.openapi.keymap.ex.KeymapManagerEx
  */
 class GeneratorFacade {
 
-  def generate(@NotNull String keymapName, @NotNull Set<String> actionsProfile, @NotNull String outputPath) {
-    def keymap = KeymapManager.instance.getKeymap(keymapName)
-    for (actionId in keymap.actionIds) {
-      keymap.get
-    }
+  def generate(@NotNull String keymapName, @NotNull List<String> actionsIds, @NotNull String outputPath) {
+    // TODO den implement
   }
 }
