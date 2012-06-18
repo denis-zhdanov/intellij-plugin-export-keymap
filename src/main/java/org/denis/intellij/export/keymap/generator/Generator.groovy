@@ -8,14 +8,26 @@ import org.jetbrains.annotations.NotNull
 import com.itextpdf.text.*
 
 import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
+import org.denis.intellij.export.keymap.model.DataEntry
+import org.denis.intellij.export.keymap.model.DataVisitor
+import org.denis.intellij.export.keymap.model.ActionData
+import org.denis.intellij.export.keymap.model.Header
+
+import org.denis.intellij.export.keymap.model.ColumnBreak
+import org.denis.intellij.export.keymap.model.ActionsProfile
 
 /**
  * @author Denis Zhdanov
  * @since 6/13/12 6:10 PM
  */
 class Generator {
+
+  // TODO den remove
+  public static void main(String[] args) {
+    new Generator().generate(ActionsProfile.DEFAULT.entries, "/home/denis/Downloads/output.pdf", "Default")
+  }
   
-  def generate(@NotNull java.util.List<SectionData> data, @NotNull String outputPath, @NotNull String keymapName) {
+  def generate(@NotNull java.util.List<DataEntry> data, @NotNull String outputPath, String keymapName) {
     def context = new GenerationContext(outputPath: outputPath, data: data, keymapName: keymapName)
     def table = doGenerate(context)
     context.prepareToRealGeneration(table)
@@ -44,63 +56,68 @@ class Generator {
   }
 
   private def addData(@NotNull GenerationContext context) {
-    for (sectionData in context.data) {
-      def table = addSection(sectionData.name, context)
-      sectionData.actions.each { table = addRow(table, it[0], it[1], context) }
+    java.util.List<Header> activeHeaders = []
+    def visitor = new DataVisitor() {
+      @Override
+      void visit(ActionData data) {
+        if (activeHeaders) {
+          addHeaders(activeHeaders, context)
+          activeHeaders.clear()
+        }
+        
+        def padding = 2f
+        
+        def keyFont = new Font(FONT_FAMILY, DATA_FONT_SIZE, Font.BOLD)
+        def keyCell = new PdfPCell(new Paragraph(data.shortcut, keyFont))
+        keyCell.border = Rectangle.BOTTOM
+        keyCell.backgroundColor = COLOR_BACKGROUND_KEY
+        keyCell.borderColor = COLOR_BORDER_DATA
+        keyCell.padding = padding
+        context.dataTable.addCell(keyCell)
+
+        def valueFont = new Font(FONT_FAMILY, DATA_FONT_SIZE)
+        def valueCell = new PdfPCell(new Paragraph(data.description, valueFont))
+        valueCell.border = Rectangle.BOTTOM
+        valueCell.borderColor = COLOR_BORDER_DATA
+        valueCell.padding = padding
+        context.dataTable.addCell(valueCell)
+        context.onNewRow()
+      }
+
+      @Override void visit(Header data) { activeHeaders << data }
+
+      @Override
+      void visit(ColumnBreak columnBreak) {
+        if (context.realGenerationIteration) {
+          context.nextColumn()
+        }
+      }
     }
-  }
-
-  private static PdfPTable addSection(@NotNull String title, @NotNull GenerationContext context) {
-    def result = new PdfPTable(2)
-    result.setWidthPercentage(100)
-    def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
-    def titleCell = new PdfPCell(new Paragraph(title, font))
-    titleCell.border = Rectangle.BOTTOM
-    titleCell.borderColor = COLOR_BORDER_HEADER
-    titleCell.colspan = 2
-    result.addCell(titleCell)
     
-    context.updateColumn(2)
-    context.currentColumn().addElement(result)
-    context.onNewRow()
-    result
+    context.data.each { visitor.visit(it) }
   }
-
-  private static PdfPTable addRow(final @NotNull PdfPTable table,
-                                  @NotNull String key,
-                                  @NotNull String value,
-                                  @NotNull GenerationContext context)
-  {
-    def tableToUse = table
-    context.updateColumn(1, {
-      tableToUse = new PdfPTable(2)
-      tableToUse.widthPercentage = 100
+  
+  private static void addHeaders(@NotNull java.util.List<Header> headers, @NotNull GenerationContext context) {
+    context.updateColumn(headers.size() + 1 /* at least one data row */)
+    context.newTable()
+    def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
+    def addCell = { String title, boolean withBorder ->
+      def titleCell = new PdfPCell(new Paragraph(title, font))
+      titleCell.colspan = 2
+      if (withBorder) {
+        titleCell.border = Rectangle.BOTTOM
+        titleCell.borderColor = COLOR_BORDER_HEADER
+      }
+      else {
+        titleCell.border = Rectangle.NO_BORDER
+      }
       
-      // Align data entry with the first data entry at the neighbour columns:
-      //    | Section name   |                      <-- we don't want to add new data entry on this row
-      //    | Key1 | Value 1 |   | KeyN  | ValueN | <-- add it here instead
-      //    | Key2 | Value 2 |
-      def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
-      def emptyCell = new PdfPCell(new Paragraph(" ", font))
-      emptyCell.colspan = 2
-      emptyCell.border = Rectangle.NO_BORDER
-      tableToUse.addCell(emptyCell)
-      it.addElement(tableToUse)
-    })
-
-    def keyFont = new Font(FONT_FAMILY, DATA_FONT_SIZE, Font.BOLD)
-    def keyCell = new PdfPCell(new Paragraph(key, keyFont))
-    keyCell.border = Rectangle.BOTTOM
-    keyCell.backgroundColor = COLOR_BACKGROUND_KEY
-    keyCell.borderColor = COLOR_BORDER_DATA
-    tableToUse.addCell(keyCell)
-
-    def valueFont = new Font(FONT_FAMILY, DATA_FONT_SIZE)
-    def valueCell = new PdfPCell(new Paragraph(value, valueFont))
-    valueCell.border = Rectangle.BOTTOM
-    valueCell.borderColor = COLOR_BORDER_DATA
-    tableToUse.addCell(valueCell)
-    context.onNewRow()
-    tableToUse
+      context.dataTable.addCell(titleCell)
+    }
+    for (header in headers.subList(0, headers.size() - 1)) {
+      addCell(header.name, false)
+    }
+    addCell(headers.last().name, true)
+    headers.size().times { context.onNewRow() }
   }
 }

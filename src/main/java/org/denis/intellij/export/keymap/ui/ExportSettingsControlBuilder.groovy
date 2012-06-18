@@ -10,6 +10,10 @@ import org.jetbrains.annotations.NotNull
 
 import javax.swing.JComponent
 import javax.swing.tree.DefaultTreeModel
+import org.denis.intellij.export.keymap.model.ActionsProfile
+import org.denis.intellij.export.keymap.model.KeymapInfo
+import com.intellij.ide.util.projectWizard.NamePathComponent
+import com.intellij.openapi.keymap.Keymap
 
 /**
  * @author Denis Zhdanov
@@ -18,21 +22,10 @@ import javax.swing.tree.DefaultTreeModel
 class ExportSettingsControlBuilder {
 
   @NotNull
-  JComponent build(@NotNull List<KeymapInfo> keymaps, @NotNull List<ActionsProfile> profiles, @NotNull Collection<ActionsGroup> allActions)
+  JComponent build(@NotNull List<Keymap> keymaps, @NotNull List<ActionsProfile> profiles)
   {
-    def root = new CheckedTreeNode("root")
-    def tree = new CheckboxTree(new TreeNodeRenderer(), root)
-    def model = new DefaultTreeModel(root)
-    tree.model = model
-    for (group in allActions) {
-      def groupNode = new CheckedTreeNode(group)
-      for (action in group.actions) {
-        groupNode.add(new CheckedTreeNode(action))
-      }
-      tree.model.root.add(groupNode)
-    }
-    
-    model.nodeStructureChanged(root)
+    def pathText = Bundle.message("label.path")
+    def pathControl = new NamePathComponent("", pathText, pathText, "", false, false)
     
     new SwingBuilder().panel() {
       gridBagLayout()
@@ -42,13 +35,13 @@ class ExportSettingsControlBuilder {
       label(text: Bundle.message("label.keymap") + ":", constraints: labelConstraints)
       
       def controlConstraints = gbc(gridwidth: REMAINDER, fill: HORIZONTAL, insets: [0, 0, 5, 0])
-      def keymap = comboBox(items: keymaps.collect { it.name }, constraints: controlConstraints)
-      
-      widget(new JBScrollPane(tree), constraints: gbc(gridwidth: REMAINDER, fill: BOTH, insets: [0, 0, 5, 0]))
+      def keymap = comboBox(items: keymaps.collect { it.presentableName }, constraints: controlConstraints)
+
+//      widget(pathControl, constraints: gbc(gridwidth: REMAINDER, anchor: WEST))
       
       def buttonConstraints = gbc(gridwidth: REMAINDER, anchor: CENTER)
       button(text: Bundle.message("button.generate"), constraints: buttonConstraints, actionPerformed: {
-        new GeneratorFacade().generate(keymap.selectedItem.toString(), [].toSet(), '/home/denis/Downloads/output.pdf')
+        new GeneratorFacade().generate(keymaps[keymap.selectedIndex], ActionsProfile.DEFAULT, '/home/denis/Downloads/output.pdf')
       })
     }
   }
