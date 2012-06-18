@@ -65,7 +65,7 @@ class Generator {
           activeHeaders.clear()
         }
         
-        def padding = 2f
+        def padding = 1f
         
         def keyFont = new Font(FONT_FAMILY, DATA_FONT_SIZE, Font.BOLD)
         def keyCell = new PdfPCell(new Paragraph(data.shortcut, keyFont))

@@ -15,9 +15,9 @@ public class GenerationConstants {
   public static final BaseColor       COLOR_BORDER_DATA      = new BaseColor(137, 137, 144);
   public static final Font.FontFamily FONT_FAMILY            = Font.FontFamily.TIMES_ROMAN;
   public static final float           PADDING_HEADER_BOTTOM  = 10f;
-  public static final float           HEADER_FONT_SIZE       = 8f;
-  public static final float           ACTION_GROUP_FONT_SIZE = 6f;
-  public static final float           DATA_FONT_SIZE         = 5f;
+  public static final float           HEADER_FONT_SIZE       = 10f;
+  public static final float           ACTION_GROUP_FONT_SIZE = 8f;
+  public static final float           DATA_FONT_SIZE         = 6f;
   public static final int             COLUMNS_NUMBER         = 3;
 
   private GenerationConstants() {
