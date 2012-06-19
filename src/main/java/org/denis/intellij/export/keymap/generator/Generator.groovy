@@ -6,15 +6,9 @@ import com.itextpdf.text.pdf.PdfWriter
 import org.denis.intellij.export.keymap.Bundle
 import org.jetbrains.annotations.NotNull
 import com.itextpdf.text.*
+import org.denis.intellij.export.keymap.model.*
 
 import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
-import org.denis.intellij.export.keymap.model.DataEntry
-import org.denis.intellij.export.keymap.model.DataVisitor
-import org.denis.intellij.export.keymap.model.ActionData
-import org.denis.intellij.export.keymap.model.Header
-
-import org.denis.intellij.export.keymap.model.ColumnBreak
-import org.denis.intellij.export.keymap.model.ActionsProfile
 
 /**
  * @author Denis Zhdanov
@@ -22,11 +16,6 @@ import org.denis.intellij.export.keymap.model.ActionsProfile
  */
 class Generator {
 
-  // TODO den remove
-  public static void main(String[] args) {
-    new Generator().generate(ActionsProfile.DEFAULT.entries, "/home/denis/Downloads/output.pdf", "Default")
-  }
-  
   def generate(@NotNull java.util.List<DataEntry> data, @NotNull String outputPath, String keymapName) {
     def context = new GenerationContext(outputPath: outputPath, data: data, keymapName: keymapName)
     def table = doGenerate(context)
@@ -36,6 +25,8 @@ class Generator {
 
   private def doGenerate(@NotNull GenerationContext context) {
     def document = new Document()
+    float margin = 15f
+    document.setMargins(margin, margin, margin, margin)
     context.document = document
     document.setPageSize(PageSize.A4.rotate())
     PdfWriter.getInstance(document, new BufferedOutputStream(new FileOutputStream(context.outputPath)))
@@ -65,21 +56,26 @@ class Generator {
           activeHeaders.clear()
         }
         
-        def padding = 1f
+        def paddingTopBottom = 1f
+        def paddingLeft = 3f
         
         def keyFont = new Font(FONT_FAMILY, DATA_FONT_SIZE, Font.BOLD)
         def keyCell = new PdfPCell(new Paragraph(data.shortcut, keyFont))
         keyCell.border = Rectangle.BOTTOM
         keyCell.backgroundColor = COLOR_BACKGROUND_KEY
         keyCell.borderColor = COLOR_BORDER_DATA
-        keyCell.padding = padding
+        keyCell.paddingTop = paddingTopBottom
+        keyCell.paddingBottom = paddingTopBottom
+        keyCell.paddingLeft = paddingLeft
         context.dataTable.addCell(keyCell)
 
         def valueFont = new Font(FONT_FAMILY, DATA_FONT_SIZE)
         def valueCell = new PdfPCell(new Paragraph(data.description, valueFont))
         valueCell.border = Rectangle.BOTTOM
         valueCell.borderColor = COLOR_BORDER_DATA
-        valueCell.padding = padding
+        valueCell.paddingTop = paddingTopBottom
+        valueCell.paddingBottom = paddingTopBottom
+        valueCell.paddingLeft = paddingLeft
         context.dataTable.addCell(valueCell)
         context.onNewRow()
       }
