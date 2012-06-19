@@ -1,27 +1,19 @@
 package org.denis.intellij.export.keymap;
 
 
-import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
-import com.intellij.openapi.actionSystem.ex.QuickList
-import com.intellij.openapi.keymap.KeymapManager
+import com.intellij.openapi.keymap.Keymap
 import com.intellij.openapi.keymap.ex.KeymapManagerEx
-import com.intellij.openapi.keymap.impl.ui.ActionsTreeUtil
-import com.intellij.openapi.keymap.impl.ui.Group
 import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.ui.popup.BalloonBuilder
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.awt.RelativePoint
-import org.jetbrains.annotations.NotNull
+import org.denis.intellij.export.keymap.model.ActionsProfile
+import org.denis.intellij.export.keymap.ui.ExportSettingsControlBuilder
 
 import java.awt.MouseInfo
-
-import org.denis.intellij.export.keymap.ui.*
-import org.denis.intellij.export.keymap.model.ActionsProfile
-import org.denis.intellij.export.keymap.model.KeymapInfo
-import com.intellij.openapi.keymap.Keymap
 
 /**
  * @author Denis Zhdanov

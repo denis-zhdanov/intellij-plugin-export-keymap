@@ -17,16 +17,21 @@ class GeneratorFacade {
     def actionManager = ActionManager.instance
     def visitor = new DataVisitor() {
       @Override void visit(ActionData data) {
-        def buffer = new StringBuilder()
-        data.id.each {
-          def shortcuts = keymap.getShortcuts(it)
-          if (shortcuts) {
-            buffer.append("/ ${shortcutDescription(shortcuts[0] as KeyboardShortcut)}")
+        // Ensure action shortcut is defined.
+        if (!data.shortcut) {
+          def buffer = new StringBuilder()
+          data.id.each {
+            def shortcuts = keymap.getShortcuts(it)
+            if (shortcuts) {
+              buffer.append("/ ${shortcutDescription(shortcuts[0] as KeyboardShortcut)}")
+            }
+          }
+          if (buffer.length() > 0) {
+            data.shortcut = buffer.toString().substring(2)
           }
         }
-        if (buffer.length() > 0) {
-          data.shortcut = buffer.toString().substring(2)
-        }
+        
+        // Ensure action description is defined
         if (!data.description) {
           def action = actionManager.getAction(data.id.first())
           if (action) {
@@ -42,12 +47,15 @@ class GeneratorFacade {
     
     // Fill shortcuts
     profile.entries.each { visitor.visit(it) }
+    
+    // Remove actions with undefined shortcuts or description.
+    profile.entries.removeAll {it in ActionData && (!it.shortcut || !it.description) }
     new Generator().generate(profile.entries, outputPath, keymap.presentableName)
   }
   
   private static String shortcutDescription(@NotNull KeyboardShortcut shortcut) {
     def result = new StringBuilder()
-    def conversions = ['[' : '', ']' : '', 'pressed' : '', 'slash' : '/'].withDefault { it }
+    def conversions = ['[' : '', ']' : '', 'pressed' : '', 'slash' : '/', 'back_quote' : 'BackQuote(`)'].withDefault { it }
     def parts = shortcut.toString().toLowerCase().split()
     parts.sort { a, b ->
       def helper = { first, second ->
