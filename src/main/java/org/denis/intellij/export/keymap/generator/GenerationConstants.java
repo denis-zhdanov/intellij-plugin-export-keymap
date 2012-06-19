@@ -18,7 +18,17 @@ public class GenerationConstants {
   public static final float           HEADER_FONT_SIZE       = 10f;
   public static final float           ACTION_GROUP_FONT_SIZE = 8f;
   public static final float           DATA_FONT_SIZE         = 6f;
+  public static final float           FOOTER_FONT_SIZE       = 7f;
   public static final int             COLUMNS_NUMBER         = 3;
+  
+  public static final String JETBRAINS_LOGO_PATH = "logo_jetbrains.gif";
+  public static final String HOME_IMAGE_PATH     = "home.jpg";
+  public static final String BLOG_IMAGE_PATH     = "rss.jpg";
+  public static final String TWITTER_IMAGE_PATH  = "twitter.png";
+  
+  public static final String PRODUCT_URL = "www.jetbrains.com/idea";
+  public static final String BLOG_URL    = "blogs.jetbrains.com/idea";
+  public static final String TWITTER_ID  = "@intellijidea";
 
   private GenerationConstants() {
   }

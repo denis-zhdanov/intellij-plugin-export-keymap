@@ -8,5 +8,5 @@ import org.jetbrains.annotations.NotNull
  */
 class ColumnBreak implements DataEntry {
 
-  @Override void visit(@NotNull DataVisitor visitor) { visitor.visit(this) }
+  @Override void invite(@NotNull DataVisitor visitor) { visitor.visitColumnBreak(this) }
 }

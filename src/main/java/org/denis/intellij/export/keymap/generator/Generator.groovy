@@ -50,7 +50,7 @@ class Generator {
     java.util.List<Header> activeHeaders = []
     def visitor = new DataVisitor() {
       @Override
-      void visit(ActionData data) {
+      void visitActionData(@NotNull ActionData data) {
         if (activeHeaders) {
           addHeaders(activeHeaders, context)
           activeHeaders.clear()
@@ -68,7 +68,7 @@ class Generator {
         keyCell.paddingBottom = paddingTopBottom
         keyCell.paddingLeft = paddingLeft
         context.dataTable.addCell(keyCell)
-
+    
         def valueFont = new Font(FONT_FAMILY, DATA_FONT_SIZE)
         def valueCell = new PdfPCell(new Paragraph(data.description, valueFont))
         valueCell.border = Rectangle.BOTTOM
@@ -79,18 +79,19 @@ class Generator {
         context.dataTable.addCell(valueCell)
         context.onNewRow()
       }
-
-      @Override void visit(Header data) { activeHeaders << data }
-
+    
+      @Override void visitHeader(@NotNull org.denis.intellij.export.keymap.model.Header data) { activeHeaders << data }
+    
       @Override
-      void visit(ColumnBreak columnBreak) {
+      void visitColumnBreak(@NotNull ColumnBreak columnBreak) {
         if (context.realGenerationIteration) {
           context.nextColumn()
         }
       }
     }
     
-    context.data.each { visitor.visit(it) }
+    context.data.each { it.invite(visitor) }
+    context.addFooter()
   }
   
   private static void addHeaders(@NotNull java.util.List<Header> headers, @NotNull GenerationContext context) {

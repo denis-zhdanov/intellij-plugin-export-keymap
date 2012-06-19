@@ -11,6 +11,6 @@ class Header implements DataEntry {
   String name
   int depth
   
-  @Override void visit(@NotNull DataVisitor visitor) { visitor.visit(this) }
+  @Override void invite(@NotNull DataVisitor visitor) { visitor.visitHeader(this) }
   @Override String toString() { name }
 }

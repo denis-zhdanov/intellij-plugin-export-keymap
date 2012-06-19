@@ -8,5 +8,5 @@ import org.jetbrains.annotations.NotNull
  */
 interface DataEntry {
   
-  void visit(@NotNull DataVisitor visitor)
+  void invite(@NotNull DataVisitor visitor)
 }

@@ -12,6 +12,6 @@ class ActionData implements DataEntry {
   String shortcut
   String description
 
-  @Override void visit(@NotNull DataVisitor visitor) { visitor.visit(this) }
+  @Override void invite(@NotNull DataVisitor visitor) { visitor.visitActionData(this) }
   @Override String toString() { description }
 }

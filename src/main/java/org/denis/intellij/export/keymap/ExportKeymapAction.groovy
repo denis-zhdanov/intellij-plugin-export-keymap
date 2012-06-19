@@ -42,22 +42,4 @@ class ExportKeymapAction extends AnAction {
     builder.setShowCallout(false).setAnimationCycle(0).setCloseButtonEnabled(false).setHideOnClickOutside(true).createBalloon()
       .show(RelativePoint.fromScreen(MouseInfo.getPointerInfo().getLocation()), Balloon.Position.above);
   }
-  
-//  private def fillGroups(@NotNull Group group, @NotNull List<ActionsGroup> holder, @NotNull ActionManager actionManager) {
-//    def result = new ActionsGroup(name: group.name)
-//    for (child in group.children) {
-//      if (child in String) {
-//        def action = actionManager.getAction(child)
-//        if (action && action.templatePresentation.text) {
-//          result.actions << new ActionData(id: [child], description: action.templatePresentation.text)
-//        }
-//      }
-//      else if (child in Group) {
-//        fillGroups(child, holder, actionManager)
-//      }
-//    }
-//    if (result.actions) {
-//      holder << result
-//    }
-//  }
 }

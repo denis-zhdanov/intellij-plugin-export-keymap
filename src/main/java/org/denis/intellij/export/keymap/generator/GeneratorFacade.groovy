@@ -16,7 +16,7 @@ class GeneratorFacade {
   def generate(@NotNull Keymap keymap, @NotNull ActionsProfile profile, @NotNull String outputPath) {
     def actionManager = ActionManager.instance
     def visitor = new DataVisitor() {
-      @Override void visit(ActionData data) {
+      @Override void visitActionData(@NotNull ActionData data) {
         // Ensure action shortcut is defined.
         if (!data.shortcut) {
           def buffer = new StringBuilder()
@@ -41,12 +41,12 @@ class GeneratorFacade {
         }
       }
       
-      @Override void visit(ColumnBreak columnBreak) { } 
-      @Override void visit(Header data) { }
+      @Override void visitColumnBreak(@NotNull ColumnBreak columnBreak) { } 
+      @Override void visitHeader(@NotNull Header data) { }
     }
     
     // Fill shortcuts
-    profile.entries.each { visitor.visit(it) }
+    profile.entries.each { it.invite(visitor) }
     
     // Remove actions with undefined shortcuts or description.
     profile.entries.removeAll {it in ActionData && (!it.shortcut || !it.description) }
