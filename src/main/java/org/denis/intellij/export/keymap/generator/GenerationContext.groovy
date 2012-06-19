@@ -31,9 +31,9 @@ class GenerationContext {
   java.util.List<Float> rowHeights = []
   float maxTableHeight
   float currentHeight
-
-  private float headerWidth
-  private float headerHeight
+  float headerWidth
+  float headerHeight
+  
   private boolean first = true
 
   def updateColumn(int rowsToAdvance) {
@@ -51,7 +51,6 @@ class GenerationContext {
   }
 
   def nextColumn() {
-    addFooter()
     if (currentColumnIndex >= GenerationConstants.COLUMNS_NUMBER) {
       document.newPage();
       currentColumnIndex = 0;
@@ -61,61 +60,6 @@ class GenerationContext {
     }
     currentHeight = 0;
     addHeader()
-  }
-  
-  def addFooter() {
-    def font = new Font(FONT_FAMILY, FOOTER_FONT_SIZE, Font.BOLD)
-    def dataHandlers = [
-      0: [GenerationConstants.HOME_IMAGE_PATH, GenerationConstants.PRODUCT_URL],
-      1: [GenerationConstants.BLOG_IMAGE_PATH, GenerationConstants.BLOG_URL],
-      2: [GenerationConstants.TWITTER_IMAGE_PATH, GenerationConstants.TWITTER_ID]
-    ]
-
-    def footer = new PdfPTable(2)
-    footer.widthPercentage = 100f
-    def (imgPath, text) = dataHandlers[currentColumnIndex]
-
-    def distinctInfoTable = new PdfPTable(7)
-    distinctInfoTable.setWidthPercentage(100f)
-    
-    def padding = 5f
-    def imgCell = new PdfPCell(loadImage(imgPath))
-    imgCell.border = Rectangle.NO_BORDER
-    imgCell.paddingTop = padding
-    distinctInfoTable.addCell(imgCell)
-    
-    def dataCell = new PdfPCell(new Paragraph(text, font))
-    dataCell.border = Rectangle.NO_BORDER
-    dataCell.colspan = 6
-    dataCell.paddingTop = padding
-    dataCell.verticalAlignment = Element.ALIGN_MIDDLE
-    distinctInfoTable.addCell(dataCell)
-    
-    def containerCell = new PdfPCell(distinctInfoTable)
-    containerCell.border = Rectangle.NO_BORDER
-    containerCell.horizontalAlignment = Element.ALIGN_LEFT
-    containerCell.padding = 0f
-    footer.addCell(containerCell)
-    
-    def logoCell = new PdfPCell(loadImage(GenerationConstants.JETBRAINS_LOGO_PATH))
-    logoCell.border = Rectangle.NO_BORDER
-    logoCell.horizontalAlignment = Element.ALIGN_RIGHT
-    logoCell.paddingTop = padding
-    footer.addCell(logoCell)
-    
-    currentColumn().addElement(footer)
-  }
-
-  private Image loadImage(@NotNull String path) {
-    def url = new URL(null, "classpath:$path", new URLStreamHandler() {
-      @Override
-      protected URLConnection openConnection(URL u) {
-        getClass().classLoader.getResource(path).openConnection()
-      }
-    })
-    def image = Image.getInstance(url)
-    image.scaleToFit((headerWidth / 2) as float, (headerHeight / 3 * 2) as float)
-    image
   }
   
   private void addHeader() {
@@ -155,6 +99,6 @@ class GenerationContext {
     // Calculate real row heights. iText doesn't provide an API to do it without flushing the document.
     table.getRow(0).cells[0].compositeElements.rows*.each { rowHeights << it.getCells()[0].height }
     rowHeights.pop()
-    maxTableHeight = document.pageSize.height - document.bottomMargin() - document.topMargin()
+    maxTableHeight = document.pageSize.height - document.bottomMargin() - document.topMargin() - headerHeight * 2
   }
 }

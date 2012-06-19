@@ -36,10 +36,13 @@ class Generator {
 
     PdfPTable rootTable = new PdfPTable(COLUMNS_NUMBER)
     rootTable.setWidthPercentage(100)
-    COLUMNS_NUMBER.times { rootTable.addCell(new PdfPCell(paddingLeft: 0f, paddingRight: 20f, border: Rectangle.NO_BORDER)) }
+    COLUMNS_NUMBER.times { rootTable.addCell(
+      new PdfPCell(paddingLeft: 0f, paddingRight: GAP_BETWEEN_COLUMNS, border: Rectangle.NO_BORDER)
+    )}
     rootTable.getRow(0).getCells().each { context.columns << it }
 
     addData(context)
+    addFooter(rootTable, context)
 
     document.add(rootTable)
     document.close()
@@ -91,7 +94,72 @@ class Generator {
     }
     
     context.data.each { it.invite(visitor) }
-    context.addFooter()
+  }
+  
+  private def addFooter(@NotNull PdfPTable rootTable, @NotNull GenerationContext context) {
+    if (!context.realGenerationIteration) {
+      return
+    }
+    
+    def font = new Font(FONT_FAMILY, FOOTER_FONT_SIZE, Font.BOLD)
+
+    def dataInfo = [
+      [GenerationConstants.HOME_IMAGE_PATH, GenerationConstants.PRODUCT_URL],
+      [GenerationConstants.BLOG_IMAGE_PATH, GenerationConstants.BLOG_URL],
+      [GenerationConstants.TWITTER_IMAGE_PATH, GenerationConstants.TWITTER_ID]
+    ]
+    
+    dataInfo.eachWithIndex { data, i ->
+      def footer = new PdfPTable(2)
+      footer.widthPercentage = 100f
+      def (imgPath, text) = data
+
+      def distinctInfoTable = new PdfPTable(7)
+      distinctInfoTable.setWidthPercentage(100f)
+
+      def padding = 5f
+      def imgCell = new PdfPCell(loadImage(imgPath, context))
+      imgCell.border = Rectangle.NO_BORDER
+      imgCell.paddingTop = padding
+      distinctInfoTable.addCell(imgCell)
+
+      def dataCell = new PdfPCell(new Paragraph(text, font))
+      dataCell.border = Rectangle.NO_BORDER
+      dataCell.colspan = 6
+      dataCell.paddingTop = padding
+      dataCell.verticalAlignment = Element.ALIGN_MIDDLE
+      distinctInfoTable.addCell(dataCell)
+
+      def containerCell = new PdfPCell(distinctInfoTable)
+      containerCell.border = Rectangle.NO_BORDER
+      containerCell.horizontalAlignment = Element.ALIGN_LEFT
+      containerCell.padding = 0f
+      footer.addCell(containerCell)
+
+      def logoCell = new PdfPCell(loadImage(GenerationConstants.JETBRAINS_LOGO_PATH, context))
+      logoCell.border = Rectangle.NO_BORDER
+      logoCell.horizontalAlignment = Element.ALIGN_RIGHT
+      logoCell.paddingTop = padding
+      footer.addCell(logoCell)
+      
+      def footerCell = new PdfPCell(footer)
+      footerCell.paddingLeft = 0f
+      footerCell.paddingRight = GAP_BETWEEN_COLUMNS
+      footerCell.border = Rectangle.NO_BORDER
+      rootTable.addCell(footerCell)
+    }
+  }
+  
+  private static Image loadImage(@NotNull String path, @NotNull GenerationContext context) {
+    def url = new URL(null, "classpath:$path", new URLStreamHandler() {
+      @Override
+      protected URLConnection openConnection(URL u) {
+        getClass().classLoader.getResource(path).openConnection()
+      }
+    })
+    def image = Image.getInstance(url)
+    image.scaleToFit((context.headerWidth / 2) as float, (context.headerHeight / 3 * 2) as float)
+    image
   }
   
   private static void addHeaders(@NotNull java.util.List<Header> headers, @NotNull GenerationContext context) {
