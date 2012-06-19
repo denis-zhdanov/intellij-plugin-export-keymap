@@ -12,7 +12,9 @@ import com.intellij.openapi.actionSystem.ActionManager
  * @since 6/14/12
  */
 class GeneratorFacade {
-
+  
+  static final String GO_TO_ACTION_TASK_ID = 'GotoAction'
+  
   def generate(@NotNull Keymap keymap, @NotNull ActionsProfile profile, @NotNull String outputPath) {
     def actionManager = ActionManager.instance
     def visitor = new DataVisitor() {
@@ -23,11 +25,11 @@ class GeneratorFacade {
           data.id.each {
             def shortcuts = keymap.getShortcuts(it)
             if (shortcuts) {
-              buffer.append("/ ${shortcutDescription(shortcuts[0] as KeyboardShortcut)}")
+              buffer.append(" / ${shortcutDescription(shortcuts[0] as KeyboardShortcut)}")
             }
           }
           if (buffer.length() > 0) {
-            data.shortcut = buffer.toString().substring(2)
+            data.shortcut = buffer.toString().substring(3)
           }
         }
         
@@ -50,14 +52,37 @@ class GeneratorFacade {
     
     // Remove actions with undefined shortcuts or description.
     profile.entries.removeAll {it in ActionData && (!it.shortcut || !it.description) }
-    new Generator().generate(profile.entries, outputPath, keymap.presentableName)
+    
+    String goToActionShortcut = null
+    def shortcuts = keymap.getShortcuts(GO_TO_ACTION_TASK_ID)
+    if (shortcuts) {
+      goToActionShortcut = shortcutDescription(shortcuts[0] as KeyboardShortcut)
+    }
+    
+    // Generate PDF.
+    new Generator().generate(profile.entries, goToActionShortcut, outputPath, keymap.presentableName)
   }
   
   private static String shortcutDescription(@NotNull KeyboardShortcut shortcut) {
     def result = new StringBuilder()
-    def conversions = ['[' : '', ']' : '', 'pressed' : '', 'slash' : '/', 'back_quote' : 'BackQuote(`)'].withDefault { it }
-    def parts = shortcut.toString().toLowerCase().split()
-    parts.sort { a, b ->
+    def conversions = [
+      '['             : '',
+      ']'             : '',
+      'pressed'       : '',
+      'slash'         : '/',
+      'back_quote'    : 'BackQuote(`)',
+      'close_bracket' : ']',
+      'open_bracket'  : '[',
+      'back_space'    : 'Backspace',
+      'add'           : 'NumPad+',
+      'subtract'      : 'NumPad-'
+    ].withDefault { it }
+    def text = shortcut.toString().toLowerCase()
+    conversions.each { key, value -> text = text.replace(key, value) }
+    def parts = text.split()
+    
+    // Sort shortcut description parts (e.g. use not 'Alt + Ctrl + S' but 'Ctrl + Alt + S').
+    parts = parts.sort { a, b ->
       def helper = { first, second ->
         if (first == 'ctrl'
           || (first == 'shift' && second != 'ctrl')
@@ -75,11 +100,10 @@ class GeneratorFacade {
       }
       0
     }
+    
     parts.each {
-      def text = it
-      conversions.each { key, value -> text = text.replace(key, value) }
-      if (text) {
-        result.append(StringUtil.capitalize(text)).append(" + ")
+      if (it) {
+        result.append(StringUtil.capitalize(it)).append(" + ")
       }
     }
     if (result.length()) {

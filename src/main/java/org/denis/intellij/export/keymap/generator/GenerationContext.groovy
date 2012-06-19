@@ -26,6 +26,7 @@ class GenerationContext {
   String keymapName
   Document document
   String outputPath
+  String goToActionShortcut
   boolean realGenerationIteration
 
   java.util.List<Float> rowHeights = []

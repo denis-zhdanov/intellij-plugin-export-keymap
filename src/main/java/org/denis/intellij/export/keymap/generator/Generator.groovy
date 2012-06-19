@@ -9,6 +9,7 @@ import com.itextpdf.text.*
 import org.denis.intellij.export.keymap.model.*
 
 import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
+import org.jetbrains.annotations.Nullable
 
 /**
  * @author Denis Zhdanov
@@ -16,8 +17,12 @@ import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
  */
 class Generator {
 
-  def generate(@NotNull java.util.List<DataEntry> data, @NotNull String outputPath, String keymapName) {
-    def context = new GenerationContext(outputPath: outputPath, data: data, keymapName: keymapName)
+  def generate(@NotNull java.util.List<DataEntry> data,
+               @Nullable String goToActionShortcut,
+               @NotNull String outputPath,
+               @NotNull String keymapName)
+  {
+    def context = new GenerationContext(outputPath: outputPath, data: data, keymapName: keymapName, goToActionShortcut: goToActionShortcut)
     def table = doGenerate(context)
     context.prepareToRealGeneration(table)
     doGenerate(context)
@@ -36,6 +41,7 @@ class Generator {
 
     PdfPTable rootTable = new PdfPTable(COLUMNS_NUMBER)
     rootTable.setWidthPercentage(100)
+    rootTable.extendLastRow = true
     COLUMNS_NUMBER.times { rootTable.addCell(
       new PdfPCell(paddingLeft: 0f, paddingRight: GAP_BETWEEN_COLUMNS, border: Rectangle.NO_BORDER)
     )}
@@ -63,17 +69,22 @@ class Generator {
         def paddingLeft = 3f
         
         def keyFont = new Font(FONT_FAMILY, DATA_FONT_SIZE, Font.BOLD)
-        def keyCell = new PdfPCell(new Paragraph(data.shortcut, keyFont))
+        def keyParagraph = new Paragraph(data.shortcut, keyFont)
+        keyParagraph.alignment = Element.ALIGN_MIDDLE
+        def keyCell = new PdfPCell(keyParagraph)
         keyCell.border = Rectangle.BOTTOM
         keyCell.backgroundColor = COLOR_BACKGROUND_KEY
         keyCell.borderColor = COLOR_BORDER_DATA
         keyCell.paddingTop = paddingTopBottom
         keyCell.paddingBottom = paddingTopBottom
         keyCell.paddingLeft = paddingLeft
+        keyCell.verticalAlignment = Element.ALIGN_MIDDLE
         context.dataTable.addCell(keyCell)
     
         def valueFont = new Font(FONT_FAMILY, DATA_FONT_SIZE)
-        def valueCell = new PdfPCell(new Paragraph(data.description, valueFont))
+        def valueParagraph = new Paragraph(data.description, valueFont)
+        valueParagraph.alignment = Element.ALIGN_MIDDLE
+        def valueCell = new PdfPCell(valueParagraph)
         valueCell.border = Rectangle.BOTTOM
         valueCell.borderColor = COLOR_BORDER_DATA
         valueCell.paddingTop = paddingTopBottom
@@ -94,6 +105,36 @@ class Generator {
     }
     
     context.data.each { it.invite(visitor) }
+    if (context.realGenerationIteration && context.goToActionShortcut) {
+      def actionTableContainer = new PdfPTable(1)
+      actionTableContainer.widthPercentage = 100f
+      actionTableContainer.extendLastRow = true
+      
+      def actionTable = new PdfPTable(1)
+      actionTable.widthPercentage = 100f
+      actionTable.extendLastRow = true
+
+      def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
+      def actionHint = new Paragraph(String.format(GO_TO_ACTION_TEXT, context.goToActionShortcut), font)
+      actionHint.alignment = Element.ALIGN_MIDDLE
+      def actionHintCell = new PdfPCell(actionHint)
+      actionHintCell.border = Rectangle.NO_BORDER
+      actionHintCell.horizontalAlignment = Element.ALIGN_CENTER
+      actionHintCell.verticalAlignment = Element.ALIGN_MIDDLE
+      actionTable.addCell(actionHintCell)
+
+      def image = loadImage(GO_TO_ACTION_IMAGE_PATH, context, false)
+      image.scaleAbsolute(context.headerWidth, (context.maxTableHeight - context.currentHeight) / 3 * 2 as float)
+      def imgCell = new PdfPCell(image)
+      imgCell.border = Rectangle.NO_BORDER
+      actionTable.addCell(imgCell)
+      
+      def actionTableCell = new PdfPCell(actionTable)
+      actionTableCell.borderColor = COLOR_BORDER_HEADER
+      
+      actionTableContainer.addCell(actionTableCell)
+      context.currentColumn().addElement(actionTableContainer)
+    }
   }
   
   private def addFooter(@NotNull PdfPTable rootTable, @NotNull GenerationContext context) {
@@ -150,7 +191,7 @@ class Generator {
     }
   }
   
-  private static Image loadImage(@NotNull String path, @NotNull GenerationContext context) {
+  private static Image loadImage(@NotNull String path, @NotNull GenerationContext context, boolean scale = true) {
     def url = new URL(null, "classpath:$path", new URLStreamHandler() {
       @Override
       protected URLConnection openConnection(URL u) {
@@ -158,7 +199,9 @@ class Generator {
       }
     })
     def image = Image.getInstance(url)
-    image.scaleToFit((context.headerWidth / 2) as float, (context.headerHeight / 3 * 2) as float)
+    if (scale) {
+      image.scaleToFit((context.headerWidth / 2) as float, (context.headerHeight / 3 * 2) as float)
+    }
     image
   }
   
