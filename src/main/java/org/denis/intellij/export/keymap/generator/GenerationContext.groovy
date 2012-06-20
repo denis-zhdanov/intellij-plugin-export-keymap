@@ -30,11 +30,15 @@ class GenerationContext {
   boolean realGenerationIteration
 
   java.util.List<Float> rowHeights = []
+  /** Max available table height (including header and footer) */
   float maxTableHeight
   float currentHeight
   float headerWidth
   float headerHeight
-  
+  float goToActionTextHeight
+  /** Height of the tallest column within the target table (including the header but not including the footer). */
+  float maxRealColumnHeight
+
   private boolean first = true
 
   def updateColumn(int rowsToAdvance) {
@@ -59,6 +63,7 @@ class GenerationContext {
     else {
       currentColumnIndex++;
     }
+    maxRealColumnHeight = Math.max(maxRealColumnHeight, currentHeight)
     currentHeight = 0;
     addHeader()
   }
@@ -72,7 +77,7 @@ class GenerationContext {
     headerCell.paddingBottom = PADDING_HEADER_BOTTOM
     dataTable.addCell(headerCell)
     currentColumn().addElement(dataTable)
-    currentHeight += headerHeight + PADDING_HEADER_BOTTOM
+    currentHeight += headerHeight
   }
   
   def newTable() {
@@ -93,13 +98,16 @@ class GenerationContext {
     first = true
     realGenerationIteration = true
     columns.clear()
-    def header = table.getRow(0).cells[0].compositeElements[0]
+    def rootCellElements = table.getRow(0).cells.first().compositeElements
+    def header = rootCellElements.first()
     headerWidth = header.totalWidth
     headerHeight = header.totalHeight
     
+    goToActionTextHeight = rootCellElements.last().totalHeight
+    
     // Calculate real row heights. iText doesn't provide an API to do it without flushing the document.
-    table.getRow(0).cells[0].compositeElements.rows*.each { rowHeights << it.getCells()[0].height }
-    rowHeights.pop()
-    maxTableHeight = document.pageSize.height - document.bottomMargin() - document.topMargin() - headerHeight * 2
+    rootCellElements.rows*.each { rowHeights << it.cells.max { it?.height }.height }
+    rowHeights.remove(0)
+    maxTableHeight = document.pageSize.height - document.bottomMargin() - document.topMargin()
   }
 }

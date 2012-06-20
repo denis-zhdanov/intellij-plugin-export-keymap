@@ -105,10 +105,9 @@ class Generator {
     }
     
     context.data.each { it.invite(visitor) }
-    if (context.realGenerationIteration && context.goToActionShortcut) {
+    if (context.goToActionShortcut) {
       def actionTableContainer = new PdfPTable(1)
       actionTableContainer.widthPercentage = 100f
-      actionTableContainer.extendLastRow = true
       
       def actionTable = new PdfPTable(1)
       actionTable.widthPercentage = 100f
@@ -123,11 +122,17 @@ class Generator {
       actionHintCell.verticalAlignment = Element.ALIGN_MIDDLE
       actionTable.addCell(actionHintCell)
 
-      def image = loadImage(GO_TO_ACTION_IMAGE_PATH, context, false)
-      image.scaleAbsolute(context.headerWidth, (context.maxTableHeight - context.currentHeight) / 3 * 2 as float)
-      def imgCell = new PdfPCell(image)
-      imgCell.border = Rectangle.NO_BORDER
-      actionTable.addCell(imgCell)
+      if (context.realGenerationIteration) {
+        def image = loadImage(GO_TO_ACTION_IMAGE_PATH, context, false)
+        def imgPadding = 5f
+        image.scaleAbsolute(context.headerWidth / 3 * 2 as float,
+                            (context.maxRealColumnHeight - context.currentHeight - context.goToActionTextHeight - imgPadding) as float)
+        def imgCell = new PdfPCell(image)
+        imgCell.paddingBottom = imgPadding
+        imgCell.horizontalAlignment = Rectangle.ALIGN_CENTER
+        imgCell.border = Rectangle.NO_BORDER
+        actionTable.addCell(imgCell)
+      }
       
       def actionTableCell = new PdfPCell(actionTable)
       actionTableCell.borderColor = COLOR_BORDER_HEADER
@@ -162,6 +167,7 @@ class Generator {
       def imgCell = new PdfPCell(loadImage(imgPath, context))
       imgCell.border = Rectangle.NO_BORDER
       imgCell.paddingTop = padding
+      imgCell.verticalAlignment = Element.ALIGN_MIDDLE
       distinctInfoTable.addCell(imgCell)
 
       def dataCell = new PdfPCell(new Paragraph(text, font))
@@ -180,6 +186,7 @@ class Generator {
       def logoCell = new PdfPCell(loadImage(GenerationConstants.JETBRAINS_LOGO_PATH, context))
       logoCell.border = Rectangle.NO_BORDER
       logoCell.horizontalAlignment = Element.ALIGN_RIGHT
+      logoCell.verticalAlignment = Element.ALIGN_MIDDLE
       logoCell.paddingTop = padding
       footer.addCell(logoCell)
       
