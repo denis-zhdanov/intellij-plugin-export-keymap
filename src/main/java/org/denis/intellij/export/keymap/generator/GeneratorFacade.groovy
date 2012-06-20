@@ -118,7 +118,7 @@ class GeneratorFacade {
     
     if (isMac(keymap)) {
       conversions['ctrl']         = '^'
-      conversions['shift']        = '⇧'
+      conversions['shift']        = '\u21e7'
       conversions['alt']          = '⌥'
       conversions['meta']         = '⌘'
       conversions['back_space']   = '⌫'

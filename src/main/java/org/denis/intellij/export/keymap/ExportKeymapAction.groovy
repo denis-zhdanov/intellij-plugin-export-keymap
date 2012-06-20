@@ -6,14 +6,15 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.keymap.Keymap
 import com.intellij.openapi.keymap.ex.KeymapManagerEx
-import com.intellij.openapi.ui.popup.Balloon
-import com.intellij.openapi.ui.popup.BalloonBuilder
-import com.intellij.openapi.ui.popup.JBPopupFactory
-import com.intellij.ui.awt.RelativePoint
-import org.denis.intellij.export.keymap.model.ActionsProfile
-import org.denis.intellij.export.keymap.ui.ExportSettingsControlBuilder
 
-import java.awt.MouseInfo
+import org.denis.intellij.export.keymap.model.ActionsProfile
+
+import javax.swing.JComponent
+import com.intellij.openapi.ui.DialogWrapper
+import groovy.swing.SwingBuilder
+import org.denis.intellij.export.keymap.generator.GeneratorFacade
+import com.intellij.ide.util.projectWizard.NamePathComponent
+import java.awt.Color
 
 /**
  * @author Denis Zhdanov
@@ -33,13 +34,41 @@ class ExportKeymapAction extends AnAction {
   }
 
   @Override
-  public void actionPerformed(AnActionEvent event) {
+  public void actionPerformed(AnActionEvent e) {
     def keymapManager = KeymapManagerEx.instanceEx
     List<Keymap> keymaps = keymapManager.allKeymaps as List<Keymap>
-    def content = new ExportSettingsControlBuilder().build(keymaps, [ActionsProfile.DEFAULT])
-    BalloonBuilder builder = JBPopupFactory.getInstance().createDialogBalloonBuilder(content, Bundle.message("action.export.keymap.name"));
+    def pathText = Bundle.message('label.path')
+    def pathControl = new NamePathComponent('', '', pathText, '', false, false)
+    pathControl.nameComponentVisible = false
+    pathControl.pathPanel.remove(pathControl.pathLabel)
+    def keyMapComboBox
+    def content = new SwingBuilder().panel() {
+      gridBagLayout()
+      emptyBorder([15, 15, 10, 15], parent: true)
+      def labelConstraints = gbc(anchor: WEST, insets: [0, 0, 5, 5])
+      def controlConstraints = gbc(gridwidth: REMAINDER, fill: HORIZONTAL, insets: [0, 4, 5, 0])
+      
+      label(text: Bundle.message("label.keymap") + ":", constraints: labelConstraints)
+      keyMapComboBox = comboBox(items: keymaps.collect { it.presentableName }, constraints: controlConstraints)
 
-    builder.setShowCallout(false).setAnimationCycle(0).setCloseButtonEnabled(false).setHideOnClickOutside(true).createBalloon()
-      .show(RelativePoint.fromScreen(MouseInfo.getPointerInfo().getLocation()), Balloon.Position.above);
+      label("$pathText:", constraints: labelConstraints)
+      controlConstraints.insets.left = 0
+      widget(pathControl, constraints: controlConstraints)
+    }
+    
+    def dialog = new DialogWrapper(PlatformDataKeys.PROJECT.getData(e.dataContext)) {
+      
+      {
+        init()
+      }
+      
+      @Override protected JComponent createCenterPanel() { content }
+    }
+    dialog.title = Bundle.message('action.export.keymap.name')
+    
+    dialog.show()
+    if (dialog.OK) {
+      new GeneratorFacade().generate(keymaps[keyMapComboBox.selectedIndex], ActionsProfile.DEFAULT, '/home/denis/Downloads/output.pdf')
+    }
   }
 }
