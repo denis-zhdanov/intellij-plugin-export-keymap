@@ -25,7 +25,7 @@ class GeneratorFacade {
           data.id.each {
             def shortcuts = keymap.getShortcuts(it)
             if (shortcuts) {
-              buffer.append(" / ${shortcutDescription(shortcuts[0] as KeyboardShortcut)}")
+              buffer.append(" / ${shortcutDescription(shortcuts[0] as KeyboardShortcut, keymap)}")
             }
           }
           if (buffer.length() > 0) {
@@ -56,27 +56,16 @@ class GeneratorFacade {
     String goToActionShortcut = null
     def shortcuts = keymap.getShortcuts(GO_TO_ACTION_TASK_ID)
     if (shortcuts) {
-      goToActionShortcut = shortcutDescription(shortcuts[0] as KeyboardShortcut)
+      goToActionShortcut = shortcutDescription(shortcuts[0] as KeyboardShortcut, keymap)
     }
     
     // Generate PDF.
     new Generator().generate(profile.entries, goToActionShortcut, outputPath, keymap.presentableName)
   }
   
-  private static String shortcutDescription(@NotNull KeyboardShortcut shortcut) {
+  private static String shortcutDescription(@NotNull KeyboardShortcut shortcut, @NotNull Keymap keymap) {
     def result = new StringBuilder()
-    def conversions = [
-      '['             : '',
-      ']'             : '',
-      'pressed'       : '',
-      'slash'         : '/',
-      'back_quote'    : 'BackQuote(`)',
-      'close_bracket' : ']',
-      'open_bracket'  : '[',
-      'back_space'    : 'Backspace',
-      'add'           : 'NumPad+',
-      'subtract'      : 'NumPad-'
-    ].withDefault { it }
+    def conversions = getShortcutConversions(keymap)
     def text = shortcut.toString().toLowerCase()
     conversions.each { key, value -> text = text.replace(key, value) }
     def parts = text.split()
@@ -110,5 +99,49 @@ class GeneratorFacade {
       result.length = result.length() - 3
     }
     result
+  }
+  
+  @NotNull
+  private static Map<String, String> getShortcutConversions(@NotNull Keymap keymap) {
+    def conversions = [
+      '['             : '',
+      ']'             : '',
+      'pressed'       : '',
+      'slash'         : '/',
+      'back_quote'    : 'BackQuote(`)',
+      'close_bracket' : ']',
+      'open_bracket'  : '[',
+      'back_space'    : 'Backspace',
+      'add'           : 'NumPad+',
+      'subtract'      : 'NumPad-'
+    ].withDefault { it }
+    
+    if (isMac(keymap)) {
+      conversions['ctrl']         = '^'
+      conversions['shift']        = '⇧'
+      conversions['alt']          = '⌥'
+      conversions['meta']         = '⌘'
+      conversions['back_space']   = '⌫'
+      conversions['delete']       = '⌦'
+      conversions['escape']       = '⎋'
+      conversions['enter']        = '↩'
+      conversions['tab']          = '⇥'
+      conversions['up']           = '↑'
+      conversions['down']         = '↓'
+      conversions['left']         = '←'
+      conversions['right']        = '→'
+    }
+    
+    conversions
+  }
+  
+  private static boolean isMac(@NotNull Keymap keymap) {
+    while (keymap) {
+      if (keymap.name.contains('Mac')) {
+        return true
+      }
+      keymap = keymap.parent
+    }
+    false
   }
 }
