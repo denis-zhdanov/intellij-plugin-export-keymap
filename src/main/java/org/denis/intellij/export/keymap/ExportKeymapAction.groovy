@@ -1,20 +1,19 @@
 package org.denis.intellij.export.keymap;
 
 
+import com.intellij.ide.util.projectWizard.NamePathComponent
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
-import com.intellij.openapi.keymap.Keymap
 import com.intellij.openapi.keymap.ex.KeymapManagerEx
-
-import org.denis.intellij.export.keymap.model.ActionsProfile
-
-import javax.swing.JComponent
 import com.intellij.openapi.ui.DialogWrapper
 import groovy.swing.SwingBuilder
 import org.denis.intellij.export.keymap.generator.GeneratorFacade
-import com.intellij.ide.util.projectWizard.NamePathComponent
-import java.awt.Color
+import org.denis.intellij.export.keymap.model.ActionsProfile
+import org.denis.intellij.export.keymap.model.Settings
+
+import javax.swing.JComponent
+import com.intellij.openapi.keymap.Keymap
 
 /**
  * @author Denis Zhdanov
@@ -35,8 +34,14 @@ class ExportKeymapAction extends AnAction {
 
   @Override
   public void actionPerformed(AnActionEvent e) {
-    def keymapManager = KeymapManagerEx.instanceEx
-    List<Keymap> keymaps = keymapManager.allKeymaps as List<Keymap>
+    def settings = Settings.instance
+    def keymaps = KeymapManagerEx.instanceEx.allKeymaps
+    keymaps = keymaps.sort { a, b ->
+      if (a.name == settings.keymapName) return -1
+      if (b.name == settings.keymapName) return 1
+      a.name <=> b.name
+    }
+    
     def pathText = Bundle.message('label.path')
     def pathControl = new NamePathComponent('', '', pathText, '', false, false)
     pathControl.nameComponentVisible = false
@@ -67,8 +72,13 @@ class ExportKeymapAction extends AnAction {
     dialog.title = Bundle.message('action.export.keymap.name')
     
     dialog.show()
-    if (dialog.OK) {
-      new GeneratorFacade().generate(keymaps[keyMapComboBox.selectedIndex], ActionsProfile.DEFAULT, '/home/denis/Downloads/output.pdf')
+    if (!dialog.OK) {
+      return
     }
+    
+    Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
+    settings.keymapName = keymap.name
+
+    new GeneratorFacade().generate(keymap, ActionsProfile.DEFAULT, '/home/denis/Downloads/output.pdf')
   }
 }
