@@ -14,11 +14,12 @@ import org.jetbrains.annotations.Nullable;
 @State(
     name = "KeymapToPDF",
     storages = { @Storage( file = "$WORKSPACE_FILE$") }
+//    storages = { @Storage( file = "$APP_CONFIG$/to-pdf.xml") }
 )
 public class Settings implements PersistentStateComponent<Settings> {
 
   @Nullable private String myKeymapName;
-  @Nullable private String myOutputPathName;
+  @Nullable private String myOutputPath;
   
   @NotNull
   public static Settings getInstance() {
@@ -33,7 +34,7 @@ public class Settings implements PersistentStateComponent<Settings> {
   @Override
   public void loadState(@NotNull Settings state) {
     setKeymapName(state.getKeymapName());
-    setOutputPathName(state.getOutputPathName());
+    setOutputPath(state.getOutputPath());
   }
 
   @Nullable
@@ -46,11 +47,11 @@ public class Settings implements PersistentStateComponent<Settings> {
   }
 
   @Nullable
-  public String getOutputPathName() {
-    return myOutputPathName;
+  public String getOutputPath() {
+    return myOutputPath;
   }
 
-  public void setOutputPathName(@Nullable String outputPathName) {
-    myOutputPathName = outputPathName;
+  public void setOutputPath(@Nullable String outputPath) {
+    myOutputPath = outputPath;
   }
 }

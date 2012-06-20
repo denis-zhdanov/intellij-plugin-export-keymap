@@ -23,9 +23,9 @@ class GeneratorFacade {
         if (!data.shortcut) {
           def buffer = new StringBuilder()
           data.id.each {
-            def shortcuts = keymap.getShortcuts(it)
-            if (shortcuts) {
-              buffer.append(" / ${shortcutDescription(shortcuts[0] as KeyboardShortcut, keymap)}")
+            def shortcut = keymap.getShortcuts(it).find { it in KeyboardShortcut}
+            if (shortcut) {
+              buffer.append(" / ${shortcutDescription(shortcut, keymap)}")
             }
           }
           if (buffer.length() > 0) {

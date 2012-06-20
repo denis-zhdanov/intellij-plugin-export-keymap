@@ -14,6 +14,13 @@ import org.denis.intellij.export.keymap.model.Settings
 
 import javax.swing.JComponent
 import com.intellij.openapi.keymap.Keymap
+import org.jetbrains.annotations.Nullable
+import org.jetbrains.annotations.NotNull
+import com.intellij.openapi.ui.popup.JBPopupFactory
+import com.intellij.openapi.ui.MessageType
+import com.intellij.openapi.ui.popup.Balloon
+import com.intellij.ui.awt.RelativePoint
+import java.awt.MouseInfo
 
 /**
  * @author Denis Zhdanov
@@ -46,6 +53,7 @@ class ExportKeymapAction extends AnAction {
     def pathControl = new NamePathComponent('', '', pathText, '', false, false)
     pathControl.nameComponentVisible = false
     pathControl.pathPanel.remove(pathControl.pathLabel)
+    pathControl.path = settings.outputPath
     def keyMapComboBox
     def content = new SwingBuilder().panel() {
       gridBagLayout()
@@ -75,10 +83,61 @@ class ExportKeymapAction extends AnAction {
     if (!dialog.OK) {
       return
     }
-    
-    Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
-    settings.keymapName = keymap.name
 
-    new GeneratorFacade().generate(keymap, ActionsProfile.DEFAULT, '/home/denis/Downloads/output.pdf')
+    Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
+    settings.keymapName = keymap.presentableName
+    
+    def path = pathControl.path?.trim()
+    settings.outputPath = path
+    path = validatePath(path, keymap.presentableName)
+    if (!path) {
+      return
+    }
+    
+    new GeneratorFacade().generate(keymap, ActionsProfile.DEFAULT, path)
+  }
+
+  @Nullable
+  private String validatePath(@Nullable String path, @NotNull String keymapName) {
+    if (!path) {
+      showError(Bundle.message('error.output.is.undefined'))
+      return null
+    }
+
+    def file = new File(path)
+    if (file.file) {
+      return null
+    }
+    if (file.directory) {
+      return "${file.canonicalPath}/Keymap-${keymapName}.pdf"
+    }
+
+    List<File> pathEntries = []
+    def parent = file.parentFile
+    while (parent) {
+      pathEntries << parent
+      parent = parent.parentFile
+    }
+
+    pathEntries = pathEntries.reverse()
+    for (entry in pathEntries) {
+      if (entry.file) {
+        showError(Bundle.message('error.output.path.entry.is.file', path, entry.path))
+        return null
+      }
+      else if (!entry.exists()) {
+        if (!entry.mkdir()) {
+          showError(Bundle.message('error.cant.create.dir', path, entry.path))
+          return null
+        }
+      }
+    }
+
+    path
+  }
+
+  private def showError(@NotNull String text) {
+    JBPopupFactory.instance.createHtmlTextBalloonBuilder(text, MessageType.ERROR, null).setShowCallout(false).createBalloon()
+      .show(RelativePoint.fromScreen(MouseInfo.getPointerInfo().getLocation()), Balloon.Position.above)
   }
 }
