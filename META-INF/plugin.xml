@@ -1,10 +1,16 @@
 <idea-plugin version="2">
   <name>Keymap exporter</name>
-  <description>Allows to export IntelliJ IDEA keymaps at the PDF format</description>
+  <description>
+<![CDATA[
+Allows to export IntelliJ IDEA keymaps at the PDF format<br>
+Usage: Main Menu | Tools | Export keymap to PDF
+]]> 
+</description>
+  <vendor>Denis Zhdanov</vendor>
   <version>1.0</version>
 
   <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="107.105"/>
+  <idea-version since-build="117.418"/>
   
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
