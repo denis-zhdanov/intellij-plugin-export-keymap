@@ -71,8 +71,7 @@ class GenerationContext {
   private void addHeader() {
     dataTable = new PdfPTable(1)
     dataTable.widthPercentage = 100
-    def headerFont = new Font(FONT_FAMILY, HEADER_FONT_SIZE, Font.BOLD, TITLE_COLOR)
-    def headerCell = new PdfPCell(new Paragraph(Bundle.message("document.header", keymapName), headerFont))
+    def headerCell = new PdfPCell(new Paragraph(Bundle.message("document.header", keymapName), HEADER_FONT))
     headerCell.border = Rectangle.NO_BORDER
     headerCell.paddingBottom = PADDING_HEADER_BOTTOM
     dataTable.addCell(headerCell)

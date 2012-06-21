@@ -8,6 +8,7 @@
   
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceImplementation="org.denis.intellij.export.keymap.model.Settings"/>
+    <applicationService serviceImplementation="org.denis.intellij.export.keymap.model.ActionsProfileManager"/>
   </extensions>
   
   <actions>

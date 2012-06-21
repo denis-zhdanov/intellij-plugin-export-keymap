@@ -9,7 +9,7 @@ import org.jetbrains.annotations.PropertyKey;
  */
 public class Bundle extends AbstractBundle {
   
-  public static final String PATH_TO_BUNDLE = "bundle";
+  public static final String PATH_TO_BUNDLE = "i18n/bundle";
   
   private static final Bundle BUNDLE = new Bundle();
   

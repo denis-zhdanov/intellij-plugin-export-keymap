@@ -5,22 +5,22 @@ import com.intellij.ide.util.projectWizard.NamePathComponent
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
+import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.keymap.Keymap
 import com.intellij.openapi.keymap.ex.KeymapManagerEx
 import com.intellij.openapi.ui.DialogWrapper
-import groovy.swing.SwingBuilder
-import org.denis.intellij.export.keymap.generator.GeneratorFacade
-import org.denis.intellij.export.keymap.model.ActionsProfile
-import org.denis.intellij.export.keymap.model.Settings
-
-import javax.swing.JComponent
-import com.intellij.openapi.keymap.Keymap
-import org.jetbrains.annotations.Nullable
-import org.jetbrains.annotations.NotNull
-import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.ui.popup.Balloon
+import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.awt.RelativePoint
+import groovy.swing.SwingBuilder
+import org.denis.intellij.export.keymap.model.ActionsProfileManager
+import org.denis.intellij.export.keymap.model.Settings
+import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
+
 import java.awt.MouseInfo
+import javax.swing.JComponent
 
 /**
  * @author Denis Zhdanov
@@ -54,15 +54,22 @@ class ExportKeymapAction extends AnAction {
     pathControl.nameComponentVisible = false
     pathControl.pathPanel.remove(pathControl.pathLabel)
     pathControl.path = settings.outputPath
+    
     def keyMapComboBox
+    def useMacButtonsCheckBox
+    
     def content = new SwingBuilder().panel() {
       gridBagLayout()
       emptyBorder([15, 15, 10, 15], parent: true)
       def labelConstraints = gbc(anchor: WEST, insets: [0, 0, 5, 5])
-      def controlConstraints = gbc(gridwidth: REMAINDER, fill: HORIZONTAL, insets: [0, 4, 5, 0])
+      def controlConstraints = gbc(gridwidth: REMAINDER, fill: HORIZONTAL, anchor:  WEST, insets: [0, 4, 5, 0])
       
       label(text: Bundle.message("label.keymap") + ":", constraints: labelConstraints)
       keyMapComboBox = comboBox(items: keymaps.collect { it.presentableName }, constraints: controlConstraints)
+      
+      useMacButtonsCheckBox = checkBox(text: Bundle.message('label.use.mac.buttons'),
+                                       selected: settings.useMacButtons,
+                                       constraints: gbc(gridwidth: REMAINDER, fill: HORIZONTAL, anchor:  WEST, insets: [0, 0, 5, 0]))
 
       label("$pathText:", constraints: labelConstraints)
       controlConstraints.insets.left = 0
@@ -83,7 +90,9 @@ class ExportKeymapAction extends AnAction {
     if (!dialog.OK) {
       return
     }
-
+    
+    settings.useMacButtons = useMacButtonsCheckBox.selected
+    
     Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
     settings.keymapName = keymap.presentableName
     
@@ -94,7 +103,11 @@ class ExportKeymapAction extends AnAction {
       return
     }
     
-    new GeneratorFacade().generate(keymap, ActionsProfile.DEFAULT, path)
+    def profileManager = ServiceManager.getService(ActionsProfileManager)
+    new GeneratorFacade().generate(keymap,
+                                   profileManager.getProfile(ActionsProfileManager.DEFAULT_PROFILE_NAME),
+                                   path,
+                                   settings.useMacButtons)
   }
 
   @Nullable

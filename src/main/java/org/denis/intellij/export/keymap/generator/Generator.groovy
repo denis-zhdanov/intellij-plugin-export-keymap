@@ -5,11 +5,11 @@ import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.denis.intellij.export.keymap.Bundle
 import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 import com.itextpdf.text.*
 import org.denis.intellij.export.keymap.model.*
 
 import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
-import org.jetbrains.annotations.Nullable
 
 /**
  * @author Denis Zhdanov
@@ -68,8 +68,7 @@ class Generator {
         def paddingTopBottom = 1f
         def paddingLeft = 3f
         
-        def keyFont = new Font(FONT_FAMILY, DATA_FONT_SIZE, Font.BOLD)
-        def keyParagraph = new Paragraph(data.shortcut, keyFont)
+        def keyParagraph = new Paragraph(data.shortcut, ACTION_SHORTCUT_FONT)
         keyParagraph.alignment = Element.ALIGN_MIDDLE
         def keyCell = new PdfPCell(keyParagraph)
         keyCell.border = Rectangle.BOTTOM
@@ -80,9 +79,8 @@ class Generator {
         keyCell.paddingLeft = paddingLeft
         keyCell.verticalAlignment = Element.ALIGN_MIDDLE
         context.dataTable.addCell(keyCell)
-    
-        def valueFont = new Font(FONT_FAMILY, DATA_FONT_SIZE)
-        def valueParagraph = new Paragraph(data.description, valueFont)
+
+        def valueParagraph = new Paragraph(data.description, ACTION_DESCRIPTION_FONT)
         valueParagraph.alignment = Element.ALIGN_MIDDLE
         def valueCell = new PdfPCell(valueParagraph)
         valueCell.border = Rectangle.BOTTOM
@@ -113,8 +111,7 @@ class Generator {
       actionTable.widthPercentage = 100f
       actionTable.extendLastRow = true
 
-      def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
-      def actionHint = new Paragraph(String.format(GO_TO_ACTION_TEXT, context.goToActionShortcut), font)
+      def actionHint = new Paragraph(String.format(GO_TO_ACTION_TEXT, context.goToActionShortcut), ACTION_GROUP_FONT)
       actionHint.alignment = Element.ALIGN_MIDDLE
       def actionHintCell = new PdfPCell(actionHint)
       actionHintCell.border = Rectangle.NO_BORDER
@@ -147,7 +144,6 @@ class Generator {
       return
     }
     
-    def font = new Font(FONT_FAMILY, FOOTER_FONT_SIZE, Font.BOLD)
 
     def dataInfo = [
       [GenerationConstants.HOME_IMAGE_PATH, GenerationConstants.PRODUCT_URL],
@@ -170,7 +166,7 @@ class Generator {
       imgCell.verticalAlignment = Element.ALIGN_MIDDLE
       distinctInfoTable.addCell(imgCell)
 
-      def dataCell = new PdfPCell(new Paragraph(text, font))
+      def dataCell = new PdfPCell(new Paragraph(text, FOOTER_FONT))
       dataCell.border = Rectangle.NO_BORDER
       dataCell.colspan = 6
       dataCell.paddingTop = padding
@@ -215,9 +211,8 @@ class Generator {
   private static void addHeaders(@NotNull java.util.List<Header> headers, @NotNull GenerationContext context) {
     context.updateColumn(headers.size() + 1 /* at least one data row */)
     context.newTable()
-    def font = new Font(FONT_FAMILY, ACTION_GROUP_FONT_SIZE, Font.BOLD, TITLE_COLOR)
     def addCell = { String title, boolean withBorder ->
-      def titleCell = new PdfPCell(new Paragraph(title, font))
+      def titleCell = new PdfPCell(new Paragraph(title, ACTION_GROUP_FONT))
       titleCell.colspan = 2
       if (withBorder) {
         titleCell.border = Rectangle.BOTTOM
