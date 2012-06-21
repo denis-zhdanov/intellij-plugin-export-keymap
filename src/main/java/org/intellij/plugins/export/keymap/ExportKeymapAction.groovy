@@ -35,12 +35,6 @@ class ExportKeymapAction extends AnAction implements DumbAware {
   }
 
   @Override
-  void update(AnActionEvent e) {
-    def project = PlatformDataKeys.PROJECT.getData(e.dataContext)
-    e.presentation.enabled = project != null
-  }
-
-  @Override
   public void actionPerformed(AnActionEvent e) {
     def settings = Settings.instance
     def keymaps = KeymapManagerEx.instanceEx.allKeymaps
