@@ -6,7 +6,7 @@ Allows to export IntelliJ IDEA keymaps at the PDF format<br>
 Usage: Main Menu | Tools | Export keymap to PDF
 ]]> 
 </description>
-  <vendor>Denis Zhdanov</vendor>
+  <vendor email="denzhdanov@gmail.com">Denis Zhdanov</vendor>
   <version>1.0</version>
 
   <idea-version since-build="111.69"/>
