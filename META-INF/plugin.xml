@@ -9,8 +9,9 @@ Usage: Main Menu | Tools | Export keymap to PDF
   <vendor>Denis Zhdanov</vendor>
   <version>1.0</version>
 
-  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="117.418"/>
+  <idea-version since-build="111.69"/>
+
+  <depends>com.intellij.modules.xml</depends>
   
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
