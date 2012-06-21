@@ -7,12 +7,12 @@
   <idea-version since-build="107.105"/>
   
   <extensions defaultExtensionNs="com.intellij">
-    <applicationService serviceImplementation="org.denis.intellij.export.keymap.model.Settings"/>
-    <applicationService serviceImplementation="org.denis.intellij.export.keymap.model.ActionsProfileManager"/>
+    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
+    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.ActionsProfileManager"/>
   </extensions>
   
   <actions>
-      <action id="ExportKeymap" class="org.denis.intellij.export.keymap.ExportKeymapAction">
+      <action id="ExportKeymap" class="org.intellij.plugins.export.keymap.ExportKeymapAction">
         <add-to-group group-id="ToolsMenu" anchor="last"/>
       </action>
   </actions>

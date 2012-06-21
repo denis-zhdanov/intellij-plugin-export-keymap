@@ -1,15 +1,15 @@
-package org.denis.intellij.export.keymap.generator
+package org.intellij.plugins.export.keymap.generator
 
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
-import org.denis.intellij.export.keymap.Bundle
+import org.intellij.plugins.export.keymap.Bundle
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import com.itextpdf.text.*
-import org.denis.intellij.export.keymap.model.*
+import org.intellij.plugins.export.keymap.model.*
 
-import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
+import static org.intellij.plugins.export.keymap.generator.GenerationConstants.*
 
 /**
  * @author Denis Zhdanov
@@ -92,7 +92,7 @@ class Generator {
         context.onNewRow()
       }
     
-      @Override void visitHeader(@NotNull org.denis.intellij.export.keymap.model.Header data) { activeHeaders << data }
+      @Override void visitHeader(@NotNull org.intellij.plugins.export.keymap.model.Header data) { activeHeaders << data }
     
       @Override
       void visitColumnBreak(@NotNull ColumnBreak columnBreak) {

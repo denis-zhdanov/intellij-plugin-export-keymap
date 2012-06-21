@@ -1,11 +1,11 @@
-package org.denis.intellij.export.keymap
+package org.intellij.plugins.export.keymap
 
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.KeyboardShortcut
 import com.intellij.openapi.keymap.Keymap
-import org.denis.intellij.export.keymap.generator.Generator
+import org.intellij.plugins.export.keymap.generator.Generator
 import org.jetbrains.annotations.NotNull
-import org.denis.intellij.export.keymap.model.*
+import org.intellij.plugins.export.keymap.model.*
 
 /**
  * @author Denis Zhdanov

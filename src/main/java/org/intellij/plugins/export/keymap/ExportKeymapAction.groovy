@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap;
+package org.intellij.plugins.export.keymap;
 
 
 import com.intellij.ide.util.projectWizard.NamePathComponent
@@ -14,19 +14,20 @@ import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.awt.RelativePoint
 import groovy.swing.SwingBuilder
-import org.denis.intellij.export.keymap.model.ActionsProfileManager
-import org.denis.intellij.export.keymap.model.Settings
+import org.intellij.plugins.export.keymap.model.ActionsProfileManager
+import org.intellij.plugins.export.keymap.model.Settings
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
 import java.awt.MouseInfo
 import javax.swing.JComponent
+import com.intellij.openapi.project.DumbAware
 
 /**
  * @author Denis Zhdanov
  * @since 6/5/12 3:47 PM
  */
-class ExportKeymapAction extends AnAction {
+class ExportKeymapAction extends AnAction implements DumbAware {
 
   public ExportKeymapAction() {
     getTemplatePresentation().setText(Bundle.message("action.export.keymap.name"));

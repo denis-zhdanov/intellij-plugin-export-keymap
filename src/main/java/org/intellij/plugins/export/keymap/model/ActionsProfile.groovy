@@ -1,6 +1,4 @@
-package org.denis.intellij.export.keymap.model
-
-import org.denis.intellij.export.keymap.Bundle
+package org.intellij.plugins.export.keymap.model
 
 /**
  * @author Denis Zhdanov

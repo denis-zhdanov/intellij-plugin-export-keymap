@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap.generator;
+package org.intellij.plugins.export.keymap.generator;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;

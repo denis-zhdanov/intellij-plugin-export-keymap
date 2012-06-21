@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap.model
+package org.intellij.plugins.export.keymap.model
 
 import com.intellij.openapi.actionSystem.KeyboardShortcut
 import org.jetbrains.annotations.NotNull

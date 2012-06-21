@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap.ui
+package org.intellij.plugins.export.keymap.ui
 
 import com.intellij.ui.CheckboxTree
 import javax.swing.JTree

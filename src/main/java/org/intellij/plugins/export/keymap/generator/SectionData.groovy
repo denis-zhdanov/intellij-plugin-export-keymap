@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap.generator;
+package org.intellij.plugins.export.keymap.generator;
 
 /**
  * Holds 'actions group' information, i.e. name of the actions group and set of pairs where every pair has a shortcut as a key

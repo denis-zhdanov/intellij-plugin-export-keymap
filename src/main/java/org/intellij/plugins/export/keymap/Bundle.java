@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap;
+package org.intellij.plugins.export.keymap;
 
 import com.intellij.AbstractBundle;
 import org.jetbrains.annotations.PropertyKey;

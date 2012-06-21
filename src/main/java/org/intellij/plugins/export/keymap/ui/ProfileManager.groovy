@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap.ui
+package org.intellij.plugins.export.keymap.ui
 
 import org.jetbrains.annotations.NotNull
 import com.intellij.openapi.actionSystem.AnAction

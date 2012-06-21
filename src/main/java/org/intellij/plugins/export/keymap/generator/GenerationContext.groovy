@@ -1,14 +1,14 @@
-package org.denis.intellij.export.keymap.generator
+package org.intellij.plugins.export.keymap.generator
 
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
-import org.denis.intellij.export.keymap.Bundle
-import org.denis.intellij.export.keymap.model.DataEntry
+import org.intellij.plugins.export.keymap.Bundle
+import org.intellij.plugins.export.keymap.model.DataEntry
 import org.jetbrains.annotations.NotNull
 
 import com.itextpdf.text.*
 
-import static org.denis.intellij.export.keymap.generator.GenerationConstants.*
+import static org.intellij.plugins.export.keymap.generator.GenerationConstants.*
 
 /**
  * Encapsulates temporary info used during PDF generation.

@@ -1,4 +1,4 @@
-package org.denis.intellij.export.keymap.model;
+package org.intellij.plugins.export.keymap.model;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -13,8 +13,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @State(
     name = "KeymapToPDF",
-    storages = { @Storage( file = "$WORKSPACE_FILE$") }
-    //storages = { @Storage( file = "$APP_CONFIG$/to-pdf.xml") }
+    storages = { @Storage( file = "$APP_CONFIG$/keymap-to-pdf.xml") }
 )
 public class Settings implements PersistentStateComponent<Settings> {
 
