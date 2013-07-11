@@ -1,15 +1,17 @@
-package org.intellij.plugins.export.keymap;
+package org.intellij.plugins.export.keymap
 
-
-import com.intellij.ide.util.projectWizard.NamePathComponent
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.keymap.Keymap
 import com.intellij.openapi.keymap.ex.KeymapManagerEx
+import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.MessageType
+import com.intellij.openapi.ui.TextComponentAccessor
+import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.awt.RelativePoint
@@ -19,9 +21,9 @@ import org.intellij.plugins.export.keymap.model.Settings
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
-import java.awt.MouseInfo
-import javax.swing.JComponent
-import com.intellij.openapi.project.DumbAware
+import javax.swing.*
+import java.awt.*
+import java.util.List
 
 /**
  * @author Denis Zhdanov
@@ -45,10 +47,16 @@ class ExportKeymapAction extends AnAction implements DumbAware {
     }
     
     def pathText = Bundle.message('label.path')
-    def pathControl = new NamePathComponent('', '', pathText, '', false, false)
-    pathControl.nameComponentVisible = false
-    pathControl.pathPanel.remove(pathControl.pathLabel)
-    pathControl.path = settings.outputPath
+    def pathControl = new TextFieldWithBrowseButton()
+    pathControl.addBrowseFolderListener(
+      "",
+      pathText,
+      null,
+      FileChooserDescriptorFactory.createSingleFolderDescriptor(),
+      TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT,
+      false
+    );
+    pathControl.text = settings.outputPath
     
     def keyMapComboBox
     def useMacButtonsCheckBox
@@ -91,7 +99,7 @@ class ExportKeymapAction extends AnAction implements DumbAware {
     Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
     settings.keymapName = keymap.presentableName
     
-    def path = pathControl.path?.trim()
+    def path = pathControl.text?.trim()
     settings.outputPath = path
     path = validatePath(path, keymap.presentableName)
     if (!path) {

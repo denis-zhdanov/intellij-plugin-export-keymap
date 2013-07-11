@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/intellij-keymap.iml" filepath="$PROJECT_DIR$/intellij-keymap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij-plugin-export-keymap.iml" filepath="$PROJECT_DIR$/intellij-plugin-export-keymap.iml" />
     </modules>
   </component>
 </project>
