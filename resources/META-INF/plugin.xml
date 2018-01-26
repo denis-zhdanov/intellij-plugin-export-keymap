@@ -1,17 +1,17 @@
-<idea-plugin version="2">
+<idea-plugin allow-bundled-update="true">
   <name>Keymap exporter</name>
   <description>
 <![CDATA[
-Allows to export IntelliJ IDEA keymaps at the PDF format<br>
-Usage: Main Menu | Tools | Export keymap to PDF
+Allows exporting your keymap to a printable PDF document.<br>
+Usage: Help | Print Keymap
 ]]> 
 </description>
-  <vendor email="denzhdanov@gmail.com">Denis Zhdanov</vendor>
+  <vendor email="dmitry.matveev@jetbrains.com">Dmitry Matveev</vendor>
   <version>1.1</version>
 
-  <idea-version since-build="130.1167"/>
+  <depends>com.intellij.modules.platform</depends>
 
-  <depends>com.intellij.modules.xml</depends>
+  <idea-version since-build="130.1167"/>
   
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
@@ -20,7 +20,7 @@ Usage: Main Menu | Tools | Export keymap to PDF
   
   <actions>
       <action id="ExportKeymap" class="org.intellij.plugins.export.keymap.ExportKeymapAction">
-        <add-to-group group-id="ToolsMenu" anchor="last"/>
+        <add-to-group group-id="HelpMenu" anchor="last"/>
       </action>
   </actions>
 

@@ -15,6 +15,7 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.awt.RelativePoint
+import com.intellij.util.SystemProperties
 import groovy.swing.SwingBuilder
 import org.intellij.plugins.export.keymap.model.ActionsProfileManager
 import org.intellij.plugins.export.keymap.model.Settings
@@ -45,7 +46,7 @@ class ExportKeymapAction extends AnAction implements DumbAware {
       if (b.name == settings.keymapName) return 1
       a.name <=> b.name
     }
-    
+
     def pathText = Bundle.message('label.path')
     def pathControl = new TextFieldWithBrowseButton()
     pathControl.addBrowseFolderListener(
@@ -66,10 +67,10 @@ class ExportKeymapAction extends AnAction implements DumbAware {
       emptyBorder([15, 15, 10, 15], parent: true)
       def labelConstraints = gbc(anchor: WEST, insets: [0, 0, 5, 5])
       def controlConstraints = gbc(gridwidth: REMAINDER, fill: HORIZONTAL, anchor:  WEST, insets: [0, 4, 5, 0])
-      
+
       label(text: Bundle.message("label.keymap") + ":", constraints: labelConstraints)
       keyMapComboBox = comboBox(items: keymaps.collect { it.presentableName }, constraints: controlConstraints)
-      
+
       useMacButtonsCheckBox = checkBox(text: Bundle.message('label.use.mac.buttons'),
                                        selected: settings.useMacButtons,
                                        constraints: gbc(gridwidth: REMAINDER, fill: HORIZONTAL, anchor:  WEST, insets: [0, 0, 5, 0]))
@@ -80,11 +81,11 @@ class ExportKeymapAction extends AnAction implements DumbAware {
     }
     
     def dialog = new DialogWrapper(PlatformDataKeys.PROJECT.getData(e.dataContext)) {
-      
+
       {
         init()
       }
-      
+
       @Override protected JComponent createCenterPanel() { content }
     }
     dialog.title = Bundle.message('action.export.keymap.name')
@@ -95,10 +96,10 @@ class ExportKeymapAction extends AnAction implements DumbAware {
     }
     
     settings.useMacButtons = useMacButtonsCheckBox.selected
-    
+
     Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
     settings.keymapName = keymap.presentableName
-    
+
     def path = pathControl.text?.trim()
     settings.outputPath = path
     path = validatePath(path, keymap.presentableName)
@@ -111,6 +112,16 @@ class ExportKeymapAction extends AnAction implements DumbAware {
                                    profileManager.getProfile(ActionsProfileManager.DEFAULT_PROFILE_NAME),
                                    path,
                                    settings.useMacButtons)
+
+    if (Desktop.isDesktopSupported()) {
+      try {
+
+        //TODO. dont' ask path
+        def homePath = SystemProperties.getUserHome()
+        Desktop.getDesktop().open(new File(path));
+      } catch (IOException ex) {
+      }
+    }
   }
 
   @Nullable

@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/intellij-keymap.iml" filepath="$PROJECT_DIR$/intellij-keymap.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij-plugin-export-keymap.iml" filepath="$PROJECT_DIR$/intellij-plugin-export-keymap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/intellij-plugin-export-keymap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/intellij-plugin-export-keymap_main.iml" group="intellij-plugin-export-keymap" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/intellij-plugin-export-keymap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/intellij-plugin-export-keymap_test.iml" group="intellij-plugin-export-keymap" />
     </modules>
   </component>
 </project>
-

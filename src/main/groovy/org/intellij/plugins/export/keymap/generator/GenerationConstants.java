@@ -11,36 +11,27 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GenerationConstants {
 
-  public static final BaseColor TITLE_COLOR          = new BaseColor(35, 83, 142);
-  public static final BaseColor COLOR_BACKGROUND_KEY = new BaseColor(226, 230, 242);
-  public static final BaseColor COLOR_BORDER_HEADER  = new BaseColor(32, 81, 141);
-  public static final BaseColor COLOR_BORDER_DATA    = new BaseColor(137, 137, 144);
+  public static final BaseColor TITLE_COLOR          = new BaseColor(0, 0, 0);
+  public static final BaseColor COLOR_BACKGROUND_KEY = new BaseColor(255, 255, 255);
+  public static final BaseColor COLOR_BACKGROUND_SECTION = new BaseColor(220, 220, 220);
+  public static final BaseColor COLOR_BORDER_SECTION = new BaseColor(211, 211, 211);
+  public static final BaseColor COLOR_BORDER_DATA    = new BaseColor(211, 211, 211);
 
-  public static final float GAP_BETWEEN_COLUMNS    = 20f;
-  public static final float           PADDING_HEADER_BOTTOM  = 10f;
-  public static final float           HEADER_FONT_SIZE       = 9;
+  public static final float           GAP_BETWEEN_COLUMNS    = 20f;
+  public static final float           PADDING_HEADER_BOTTOM  = 5f;
+  public static final float           HEADER_FONT_SIZE       = 14f;
   public static final float           ACTION_GROUP_FONT_SIZE = 8f;
-  public static final float           DATA_FONT_SIZE         = 5.5f;
-  public static final float           FOOTER_FONT_SIZE       = 6f;
+  public static final float           DATA_FONT_SIZE         = 7.5f;
+  //public static final float           FOOTER_FONT_SIZE       = 6f;
   public static final int             COLUMNS_NUMBER         = 3;
   
-  private static final String BOLD_FONT_NAME   = "font/Lucida Grande Bold.ttf";
-  private static final String NORMAL_FONT_NAME = "font/Lucida Grande.ttf";
+  private static final String BOLD_FONT_NAME   = "font/OpenSans-Bold.ttf";
+  private static final String NORMAL_FONT_NAME = "font/OpenSans-Regular.ttf";
   public static final Font HEADER_FONT             = new Font(getFont(BOLD_FONT_NAME), HEADER_FONT_SIZE, Font.NORMAL, TITLE_COLOR);
   public static final Font ACTION_GROUP_FONT       = new Font(getFont(BOLD_FONT_NAME), ACTION_GROUP_FONT_SIZE, Font.NORMAL, TITLE_COLOR);
   public static final Font ACTION_SHORTCUT_FONT    = new Font(getFont(BOLD_FONT_NAME), DATA_FONT_SIZE);
   public static final Font ACTION_DESCRIPTION_FONT = new Font(getFont(NORMAL_FONT_NAME), DATA_FONT_SIZE);
-  public static final Font FOOTER_FONT             = new Font(getFont(BOLD_FONT_NAME), FOOTER_FONT_SIZE);
-  
-  public static final String JETBRAINS_LOGO_PATH      = "image/logo_jetbrains.gif";
-  public static final String HOME_IMAGE_PATH          = "image/home.jpg";
-  public static final String BLOG_IMAGE_PATH          = "image/rss.jpg";
-  public static final String TWITTER_IMAGE_PATH       = "image/twitter.png";
-  public static final String GO_TO_ACTION_IMAGE_PATH  = "image/go-to-action.png";
-  
-  public static final String PRODUCT_URL = "www.jetbrains.com/idea";
-  public static final String BLOG_URL    = "blogs.jetbrains.com/idea";
-  public static final String TWITTER_ID  = "@intellijidea";
+
   
   public static final String GO_TO_ACTION_TEXT =
     "To find any action inside the IDE\n" +

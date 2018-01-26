@@ -4,8 +4,8 @@ import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.KeyboardShortcut
 import com.intellij.openapi.keymap.Keymap
 import org.intellij.plugins.export.keymap.generator.Generator
-import org.jetbrains.annotations.NotNull
 import org.intellij.plugins.export.keymap.model.*
+import org.jetbrains.annotations.NotNull
 
 /**
  * @author Denis Zhdanov
@@ -38,7 +38,8 @@ class GeneratorFacade {
           def action = actionManager.getAction(data.id.first())
           if (action) {
             def p = action.templatePresentation
-            data.description = p?.description ?: p?.text
+//            data.description = p?.description ?: p?.text
+            data.description = p?.text
           }
         }
       }
@@ -52,13 +53,22 @@ class GeneratorFacade {
     
     // Remove actions with undefined shortcuts or description.
     profile.entries.removeAll {it in ActionData && (!it.shortcut || !it.description) }
-    
+
+    // Remove category header if there is no action in the category
+    DataEntry entry
+    List<DataEntry> entriesToRemove = new ArrayList<DataEntry>()
+    profile.entries.each {
+      if (it in Header && entry in Header) entriesToRemove.add(entry)
+      entry = it
+    }
+    profile.entries.removeAll(entriesToRemove)
+
     String goToActionShortcut = null
     def shortcuts = keymap.getShortcuts(GO_TO_ACTION_TASK_ID)
     if (shortcuts) {
       goToActionShortcut = shortcutDescription(shortcuts[0] as KeyboardShortcut, useMacButtons)
     }
-    
+
     // Generate PDF.
     new Generator().generate(profile.entries, goToActionShortcut, outputPath, keymap.presentableName)
   }
