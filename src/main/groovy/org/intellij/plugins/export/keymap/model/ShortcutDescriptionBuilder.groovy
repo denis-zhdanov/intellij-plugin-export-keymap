@@ -2,6 +2,7 @@ package org.intellij.plugins.export.keymap.model
 
 import com.intellij.openapi.actionSystem.KeyboardShortcut
 import com.intellij.openapi.keymap.KeymapUtil
+import com.intellij.openapi.util.SystemInfo
 import org.jetbrains.annotations.NotNull
 import com.intellij.openapi.util.text.StringUtil
 
@@ -64,17 +65,31 @@ class ShortcutDescriptionBuilder {
     def result = KeymapUtil.getShortcutText(shortcut)
 
     def myConversions = [
-            'Equals'        : '=',
-            '+Back Slash'   : '+\\',
-            '+Slash'        : '+/',
-            'Back Quote'    : '`',
-            'Close Bracket' : ']',
-            'Open Bracket'  : '[',
+            'Equals'       : '=',
+            '+Back Slash'  : '+\\',
+            '+Slash'       : '+/',
+            'Back Quote'   : '`',
+            'Close Bracket': ']',
+            'Open Bracket' : '[',
+            'Page Down'    : 'PgDown',
+            'Page Up'      : 'PgUp',
             'Backspace'    : 'Back',
-            'Comma'         : ',',
-            'Semicolon'     : ';'
+            'Escape'       : 'Esc',
+            'Minus'        : '-',
+            'Comma'        : ',',
+            'Semicolon'    : ';'
+    ].withDefault { it }
+
+    def macConversions = [
+            'Ctrl' : 'Control',
+            'Meta' : 'Command',
+            'Alt'  : 'Option'
     ].withDefault { it }
     myConversions.each { key, value -> result = result.replace(key, value) }
+//    if (SystemInfo.isMac)
+      macConversions.each { key, value -> result = result.replace(key, value) }
+
+
     return result
 
 

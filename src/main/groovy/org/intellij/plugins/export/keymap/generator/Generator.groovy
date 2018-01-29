@@ -5,6 +5,7 @@ import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.intellij.plugins.export.keymap.Bundle
+import org.intellij.plugins.export.keymap.ExportKeymapAction
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import com.itextpdf.text.*
@@ -35,7 +36,11 @@ class Generator {
     document.setMargins(margin, margin, margin, margin)
     context.document = document
     document.setPageSize(PageSize.A4.rotate())
-    PdfWriter.getInstance(document, new BufferedOutputStream(new FileOutputStream(context.outputPath)))
+    try {
+      PdfWriter.getInstance(document, new BufferedOutputStream(new FileOutputStream(context.outputPath)))
+    } catch (Exception ex) {
+      ExportKeymapAction.showError(Bundle.message('error.output.is.busy'))
+    }
     document.addAuthor(Bundle.message("document.author"))
     document.addSubject(Bundle.message("document.subject", context.keymapName))
     document.open()

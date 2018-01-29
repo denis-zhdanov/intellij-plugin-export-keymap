@@ -97,7 +97,7 @@ class GenerationContext {
     def newTable() {
         dataTable = new PdfPTable(2)
         dataTable.setWidthPercentage(100)
-        dataTable.setWidths([3, 2] as float[]);
+        dataTable.setWidths([4, 3] as float[]);
         try{
         currentColumn().addElement(dataTable)}
         catch (Exception ex){

@@ -21,7 +21,7 @@ public class GenerationConstants {
   public static final float           PADDING_HEADER_BOTTOM  = 5f;
   public static final float           HEADER_FONT_SIZE       = 14f;
   public static final float           ACTION_GROUP_FONT_SIZE = 8f;
-  public static final float           DATA_FONT_SIZE         = 7.5f;
+  public static final float           DATA_FONT_SIZE         = 7f;
   //public static final float           FOOTER_FONT_SIZE       = 6f;
   public static final int             COLUMNS_NUMBER         = 3;
   

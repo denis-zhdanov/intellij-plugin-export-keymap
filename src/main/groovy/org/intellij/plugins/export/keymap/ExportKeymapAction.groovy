@@ -58,6 +58,8 @@ class ExportKeymapAction extends AnAction implements DumbAware {
       false
     );
     pathControl.text = settings.outputPath
+    if (pathControl.text == null)
+      pathControl.text = SystemProperties.getUserHome()
     
     def keyMapComboBox
     def useMacButtonsCheckBox
@@ -116,7 +118,7 @@ class ExportKeymapAction extends AnAction implements DumbAware {
     if (Desktop.isDesktopSupported()) {
       try {
 
-        //TODO. dont' ask path
+        //TODO. don't ask path
         def homePath = SystemProperties.getUserHome()
         Desktop.getDesktop().open(new File(path));
       } catch (IOException ex) {
@@ -163,7 +165,7 @@ class ExportKeymapAction extends AnAction implements DumbAware {
     path
   }
 
-  private def showError(@NotNull String text) {
+  public static def showError(@NotNull String text) {
     JBPopupFactory.instance.createHtmlTextBalloonBuilder(text, MessageType.ERROR, null).setShowCallout(false).createBalloon()
       .show(RelativePoint.fromScreen(MouseInfo.getPointerInfo().getLocation()), Balloon.Position.above)
   }
