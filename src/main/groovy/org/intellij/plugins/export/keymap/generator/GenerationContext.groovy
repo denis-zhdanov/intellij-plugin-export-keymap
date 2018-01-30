@@ -23,11 +23,11 @@ class GenerationContext {
     java.util.List<DataEntry> data = []
     PdfPTable dataTable
 
+    String productName = ApplicationNamesInfo.getInstance().fullProductName;
     int currentColumnIndex
     String keymapName
     Document document
     String outputPath
-    String goToActionShortcut
     boolean realGenerationIteration
 
     java.util.List<Float> rowHeights = []
@@ -36,7 +36,6 @@ class GenerationContext {
     float currentHeight
     float headerWidth
     float headerHeight
-//  float goToActionTextHeight
     /** Height of the tallest column within the target table (including the header but not including the footer). */
     float maxRealColumnHeight
 
@@ -65,28 +64,15 @@ class GenerationContext {
         }
         maxRealColumnHeight = Math.max(maxRealColumnHeight, currentHeight)
         currentHeight = 0;
-        //addHeader()
     }
 
-//    private void addHeader() {
-//        def appName = ApplicationNamesInfo.getInstance().fullProductName;
-//        dataTable = new PdfPTable(1)
-//        dataTable.widthPercentage = 100
-//        def headerCell =
-//                new PdfPCell(new Paragraph(Bundle.message("document.header", appName, keymapName), HEADER_FONT))
-//        headerCell.border = Rectangle.NO_BORDER
-//        headerCell.paddingBottom = PADDING_HEADER_BOTTOM
-//        dataTable.addCell(headerCell)
-//        currentColumn().addElement(dataTable)
-//        currentHeight += headerHeight
-//    }
 
     void addHeaderTable(Document document) {
-        def appName = ApplicationNamesInfo.getInstance().fullProductName;
+
         PdfPTable headerTable = new PdfPTable(1)
         headerTable.setWidthPercentage(100)
         def headerCell =
-                new PdfPCell(new Paragraph(Bundle.message("document.header", appName, keymapName), HEADER_FONT))
+                new PdfPCell(new Paragraph(Bundle.message("document.header", productName, keymapName), HEADER_FONT))
         headerCell.border = Rectangle.NO_BORDER
         headerCell.paddingBottom = PADDING_HEADER_BOTTOM
         headerCell.paddingTop = 0f
@@ -97,7 +83,7 @@ class GenerationContext {
     def newTable() {
         dataTable = new PdfPTable(2)
         dataTable.setWidthPercentage(100)
-        dataTable.setWidths([4, 3] as float[]);
+        dataTable.setWidths([5, 4] as float[]);
         try{
         currentColumn().addElement(dataTable)}
         catch (Exception ex){
@@ -105,11 +91,6 @@ class GenerationContext {
         }
     }
 
-    def onNewRow() {
-        if (realGenerationIteration) {
-            currentHeight += rowHeights.remove(0)
-        }
-    }
 
     def currentColumn() { columns[currentColumnIndex] }
 
@@ -121,8 +102,6 @@ class GenerationContext {
         def header = rootCellElements.first()
         headerWidth = header.totalWidth
         headerHeight = header.totalHeight
-
-//    goToActionTextHeight = rootCellElements.last().totalHeight
 
         // Calculate real row heights. iText doesn't provide an API to do it without flushing the document.
         rootCellElements.rows*.each { rowHeights << it.cells.max { it?.height }.height }

@@ -11,13 +11,14 @@ class CommonActionsProfile extends ActionsProfile {
     CommonActionsProfile() {
         entries = [
 //                CREATE AND EDIT
-new Header(depth: 0, name: 'Create and Edit'),
+new Header(depth: 0, name: 'CREATE AND EDIT'),
 new ActionData(id: ['ShowIntentionActions']),
 new ActionData(id: ['CodeCompletion'], description: 'Basic Code Completion'),
 new ActionData(id: ['SmartTypeCompletion'], description: 'Smart Code Completion'),
 new ActionData(id: ['ClassNameCompletion'], description: 'Type Name Completion'),
 new ActionData(id: ['EditorCompleteStatement'], description: 'Complete Statement'),
 new ActionData(id: ['ParameterInfo'], description: 'Parameter Information'),
+new ActionData(id: ['QuickImplementations']),
 new ActionData(id: ['QuickJavaDoc', 'ExternalJavaDoc'], description: 'Quick/External Documentation'),
 //new ActionData(id: ['ExternalJavaDoc'], description: 'External documentation'),
 //new ActionData(shortcut: 'Ctrl+mouse over', description: 'Brief Information'),
@@ -54,7 +55,7 @@ new ActionData(id: ['SaveAll']),
 
 //                ANALYZE AND EXPLORE
 
-new Header(depth: 0, name: 'Analyze and Explore'),
+new Header(depth: 0, name: 'ANALYZE AND EXPLORE'),
 new ActionData(id: ['InspectThis']),
 new ActionData(id: ['ShowErrorDescription'], description: 'Show Error Description'),
 new ActionData(id: ['GotoNextError', 'GotoPreviousError'], description: 'Next/Previous Highlighted Error'),
@@ -69,7 +70,7 @@ new ActionData(id: ['CallHierarchy']),
 
 //                VCS/LOCAL HISTORY
 
-new Header(depth: 0, name: 'Version Control'),
+new Header(depth: 0, name: 'VERSION CONTROL'),
 new ActionData(id: ['Vcs.QuickListPopupAction']),
 new ActionData(id: ['CheckinProject']),
 new ActionData(id: ['Vcs.UpdateProject']),
@@ -83,7 +84,7 @@ new ColumnBreak(),
 
 //                MASTER THE IDE
 
-new Header(depth: 0, name: 'Master your IDE'),
+new Header(depth: 0, name: 'MASTER YOUR IDE'),
 new ActionData(id: ['RiderOpenSolution'], description: 'Open Solution or Project'),
 new ActionData(id: ['OpenFile'], description: 'Open File or Folder'),
 new ActionData(id: ['GotoAction']),
@@ -102,14 +103,14 @@ new ActionData(id: ['EditSource']),
 new ActionData(id: ['ShowNavBar']),
 new ActionData(id: ['JumpToLastWindow']),
 new ActionData(id: ['HideActiveWindow','HideAllWindows'], description: 'Hide Active/All Tool Windows'),
-new ActionData(id: ['NextSplitter']),
+//new ActionData(id: ['NextSplitter']),
 new ActionData(id: ['NextTab', 'PreviousTab'], description: 'Go to Next/Previous Editor Tab'),
 new ActionData(id: ['EditorEscape'], description: 'Go to Editor (from a Tool Window)'),
 new ActionData(id: ['CloseActiveTab', 'CloseContent'], description: 'Close Active Tab/Window'),
 
 //                FIND EVERYTHING
 
-new Header(depth: 0, name: 'Find Everything'),
+new Header(depth: 0, name: 'FIND EVERYTHING'),
 new ActionData(id: ['SearchEverywhere'], shortcut: 'Double Shift'),
 new ActionData(id: ['Find', 'Replace'], description: 'Find/Replace'),
 new ActionData(id: ['FindInPath', 'ReplaceInPath'], description: 'Find/Replace in Path'),
@@ -124,21 +125,20 @@ new ActionData(id: ['StructuralSearchPlugin.StructuralReplaceAction'], descripti
 
 //                NAVIGATE FROM SYMBOLS
 
-new Header(depth: 0, name: 'Navigate from Symbols'),
+new Header(depth: 0, name: 'NAVIGATE FROM SYMBOLS'),
 new ActionData(id: ['ReSharperNavigateTo']),
 new ActionData(id: ['GotoDeclaration']),
 new ActionData(id: ['GotoTypeDeclaration']),
 new ActionData(id: ['GotoSuperMethod']),
 new ActionData(id: ['ReSharperGotoImplementation']),
 new ActionData(id: ['GotoImplementation']),
-new ActionData(id: ['QuickImplementations']),
 new ActionData(id: ['FindUsages', 'FindUsagesInFile'], description: 'Find Usages / Find Usages in File'),
 new ActionData(id: ['HighlightUsagesInFile']),
 new ActionData(id: ['ShowUsages']),
 
 //                NAVIGATE IN CONTEXT
 
-new Header(depth: 0, name: 'Navigate in Context'),
+new Header(depth: 0, name: 'NAVIGATE IN CONTEXT'),
 new ActionData(id: ['SelectIn']),
 new ActionData(id: ['LocateInSolutionExplorer']),
 new ActionData(id: ['RecentFiles','RecentChangedFiles'], description: 'Recently Viewed/Changed Files'),
@@ -160,7 +160,7 @@ new ColumnBreak(),
 
 //                BUILD AND RUN
 
-new Header(depth: 0, name: 'Build, Run, and Debug'),
+new Header(depth: 0, name: 'BUILD, RUN, AND DEBUG'),
 new ActionData(id: ['RiderNuGetQuickListPopupAction']),
 new ActionData(id: ['BuildSolutionAction']),
 new ActionData(id: ['CompileDirty']),
@@ -190,7 +190,7 @@ new ActionData(id: ['ViewBreakpoints']),
 
 //                UNIT TESTS (Rider)
 
-new Header(depth: 0, name: 'Unit Tests'),
+new Header(depth: 0, name: 'UNIT TESTS'),
 new ActionData(id: ['RiderUnitTestQuickListPopupAction']),
 new ActionData(id: ['RiderUnitTestRunContextAction', 'RiderUnitTestDebugContextAction'], description: 'Run/Debug Unit Tests'),
 new ActionData(id: ['RiderUnitTestSessionAbortAction']),
@@ -203,7 +203,7 @@ new ActionData(id: ['RiderUnitTestRunCurrentSessionAction']),
 
 //                REFACTORINGS
 
-new Header(depth: 0, name: 'Refactor and Clean Up'),
+new Header(depth: 0, name: 'REFACTOR AND CLEAN UP'),
 new ActionData(id: ['Refactorings.QuickListPopupAction']),
 new ActionData(id: ['CopyElement']),
 new ActionData(id: ['Move']),

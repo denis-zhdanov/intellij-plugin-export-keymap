@@ -62,7 +62,7 @@ class ExportKeymapAction extends AnAction implements DumbAware {
       pathControl.text = SystemProperties.getUserHome()
     
     def keyMapComboBox
-    def useMacButtonsCheckBox
+    //def useMacButtonsCheckBox
     
     def content = new SwingBuilder().panel() {
       gridBagLayout()
@@ -73,9 +73,9 @@ class ExportKeymapAction extends AnAction implements DumbAware {
       label(text: Bundle.message("label.keymap") + ":", constraints: labelConstraints)
       keyMapComboBox = comboBox(items: keymaps.collect { it.presentableName }, constraints: controlConstraints)
 
-      useMacButtonsCheckBox = checkBox(text: Bundle.message('label.use.mac.buttons'),
-                                       selected: settings.useMacButtons,
-                                       constraints: gbc(gridwidth: REMAINDER, fill: HORIZONTAL, anchor:  WEST, insets: [0, 0, 5, 0]))
+//      useMacButtonsCheckBox = checkBox(text: Bundle.message('label.use.mac.buttons'),
+//                                       selected: settings.useMacButtons,
+//                                       constraints: gbc(gridwidth: REMAINDER, fill: HORIZONTAL, anchor:  WEST, insets: [0, 0, 5, 0]))
 
       label("$pathText:", constraints: labelConstraints)
       controlConstraints.insets.left = 0
@@ -97,7 +97,7 @@ class ExportKeymapAction extends AnAction implements DumbAware {
       return
     }
     
-    settings.useMacButtons = useMacButtonsCheckBox.selected
+//    settings.useMacButtons = useMacButtonsCheckBox.selected
 
     Keymap keymap = keymaps[keyMapComboBox.selectedIndex]
     settings.keymapName = keymap.presentableName
