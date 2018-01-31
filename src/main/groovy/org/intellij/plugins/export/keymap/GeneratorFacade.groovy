@@ -16,7 +16,7 @@ class GeneratorFacade {
 
     static def generate(
             @NotNull Keymap keymap,
-            @NotNull ActionsProfile profile, @NotNull String outputPath, boolean useMacButtons) {
+            @NotNull ActionsProfile profile, @NotNull String outputPath) {
         def actionManager = ActionManager.instance
         def visitor = new DataVisitor() {
             @Override

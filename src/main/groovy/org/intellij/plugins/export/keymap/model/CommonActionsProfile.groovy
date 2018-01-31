@@ -85,9 +85,9 @@ new ColumnBreak(),
 //                MASTER THE IDE
 
 new Header(depth: 0, name: 'MASTER YOUR IDE'),
+new ActionData(id: ['GotoAction']),
 new ActionData(id: ['RiderOpenSolution'], description: 'Open Solution or Project'),
 new ActionData(id: ['OpenFile'], description: 'Open File or Folder'),
-new ActionData(id: ['GotoAction']),
 new ActionData(id: ['ActivateMessagesToolWindow', 'ActivateProjectToolWindow', 'ActivateFavoritesToolWindow', 'ActivateFindToolWindow',
                     'ActivateRunToolWindow', 'ActivateDebugToolWindow', 'ActivateTODOToolWindow', 'ActivateStructureToolWindow',
                     'ActivateHierarchyToolWindow', 'ActivateChangesToolWindow'],

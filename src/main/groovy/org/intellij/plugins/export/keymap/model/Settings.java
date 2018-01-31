@@ -19,7 +19,6 @@ public class Settings implements PersistentStateComponent<Settings> {
 
   @Nullable private String myKeymapName;
   @Nullable private String myOutputPath;
-  private boolean myUseMacButtons;
   
   @NotNull
   public static Settings getInstance() {
@@ -35,7 +34,6 @@ public class Settings implements PersistentStateComponent<Settings> {
   public void loadState(@NotNull Settings state) {
     setKeymapName(state.getKeymapName());
     setOutputPath(state.getOutputPath());
-    setUseMacButtons(state.isUseMacButtons());
   }
 
   @Nullable
@@ -56,11 +54,6 @@ public class Settings implements PersistentStateComponent<Settings> {
     myOutputPath = outputPath;
   }
 
-  public boolean isUseMacButtons() {
-    return myUseMacButtons;
-  }
 
-  public void setUseMacButtons(boolean useMacButtons) {
-    myUseMacButtons = useMacButtons;
-  }
+
 }
