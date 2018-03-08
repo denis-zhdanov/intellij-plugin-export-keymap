@@ -20,7 +20,7 @@ Usage: <b>Help | Print Keymap</b>
   
   <actions>
       <action id="ExportKeymap" class="org.intellij.plugins.export.keymap.ExportKeymapAction">
-        <add-to-group group-id="HelpMenu" anchor="last"/>
+        <add-to-group group-id="HelpMenu" anchor="after" relative-to-action="ProductivityGuide"/>
       </action>
   </actions>
 
