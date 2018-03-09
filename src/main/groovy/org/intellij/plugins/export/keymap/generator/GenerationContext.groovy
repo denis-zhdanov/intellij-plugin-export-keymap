@@ -43,7 +43,7 @@ class GenerationContext {
 
     def updateColumn(int rowsToAdvance) {
         if (first) {
-            //addHeader()
+            addHeader()
             first = false
         }
         if (!realGenerationIteration || !rowHeights) {
@@ -55,8 +55,20 @@ class GenerationContext {
         }
     }
 
+    private void addHeader() {
+        dataTable = new PdfPTable(1)
+        dataTable.widthPercentage = 100
+        def headerCell =
+                new PdfPCell(new Paragraph(productName, INLINE_HEADER_FONT))
+        headerCell.border = Rectangle.NO_BORDER
+        headerCell.paddingBottom = PADDING_HEADER_BOTTOM
+        dataTable.addCell(headerCell)
+        currentColumn().addElement(dataTable)
+        currentHeight += headerHeight
+    }
+
     def nextColumn() {
-        if (currentColumnIndex >= COLUMNS_NUMBER-1) {
+        if (currentColumnIndex >= COLUMNS_NUMBER - 1) {
             document.newPage();
             currentColumnIndex = 0;
         } else {
@@ -84,10 +96,11 @@ class GenerationContext {
         dataTable = new PdfPTable(2)
         dataTable.setWidthPercentage(100)
         dataTable.setWidths([5, 4] as float[]);
-        try{
-        currentColumn().addElement(dataTable)}
-        catch (Exception ex){
-           println()
+        try {
+            currentColumn().addElement(dataTable)
+        }
+        catch (Exception ex) {
+            println()
         }
     }
 

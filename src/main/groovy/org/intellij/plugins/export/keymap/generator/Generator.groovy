@@ -67,18 +67,16 @@ class Generator {
           addSectionTitles(activeHeaders, context)
           activeHeaders.clear()
         }
-        
-        def paddingTopBottom = 2f
-        def paddingLeft = 3f
 
         def valueParagraph = new Paragraph(data.description, ACTION_DESCRIPTION_FONT)
         valueParagraph.alignment = Element.ALIGN_MIDDLE
         def valueCell = new PdfPCell(valueParagraph)
         valueCell.border = Rectangle.BOTTOM
         valueCell.borderColor = COLOR_BACKGROUND_AND_LINES
-        valueCell.paddingTop = paddingTopBottom
-        valueCell.paddingBottom = paddingTopBottom
-        valueCell.paddingLeft = paddingLeft
+        valueCell.paddingTop = ACTION_CELL_PADDING_TOP
+        valueCell.paddingBottom = ACTION_CELL_PADDING_BOTTOM
+        valueCell.paddingLeft = ACTION_CELL_PADDING_LEFT
+        valueCell.verticalAlignment = Element.ALIGN_MIDDLE
         context.dataTable.addCell(valueCell)
         
         def keyParagraph = new Paragraph(data.shortcut, ACTION_SHORTCUT_FONT)
@@ -86,14 +84,11 @@ class Generator {
         def keyCell = new PdfPCell(keyParagraph)
         keyCell.border = Rectangle.BOTTOM
         keyCell.borderColor = COLOR_BACKGROUND_AND_LINES
-        keyCell.paddingTop = paddingTopBottom
-        keyCell.paddingBottom = paddingTopBottom
-        keyCell.paddingLeft = paddingLeft
+        keyCell.paddingTop = ACTION_CELL_PADDING_TOP
+        keyCell.paddingBottom = ACTION_CELL_PADDING_BOTTOM
+        keyCell.paddingLeft = ACTION_CELL_PADDING_LEFT
         keyCell.verticalAlignment = Element.ALIGN_MIDDLE
         context.dataTable.addCell(keyCell)
-
-
-
       }
     
       @Override void visitHeader(@NotNull org.intellij.plugins.export.keymap.model.Header data) { activeHeaders << data }
@@ -114,19 +109,22 @@ class Generator {
     if (!context.realGenerationIteration) {
       return
     }
-    context.addHeaderTable(document)
+    //context.addHeaderTable(document)
   }
 
   private static void addSectionTitles(@NotNull java.util.List<Header> headers, @NotNull GenerationContext context) {
     context.updateColumn(headers.size() + 1 /* at least one data row */)
     context.newTable()
     def addCell = { String title, boolean withBorder ->
-      def titleCell = new PdfPCell(new Paragraph(title, ACTION_GROUP_FONT))
+      def titleCell = new PdfPCell(new Paragraph(title, GROUP_TITLE_FONT))
       titleCell.colspan = 2
-      titleCell.backgroundColor = COLOR_BACKGROUND_AND_LINES
+      titleCell.paddingLeft = 0
+      //titleCell.backgroundColor = COLOR_BACKGROUND_AND_LINES
       if (withBorder) {
         titleCell.border = Rectangle.BOTTOM
-        titleCell.borderColor = COLOR_BACKGROUND_AND_LINES
+        titleCell.paddingBottom = GROUP_TITLE_PADDING_BOTTOM
+        titleCell.borderWidth = GROUP_TITLE_BORDER_WIDTH
+        titleCell.borderColor = COLOR_GROUP_TITLE_BORDER
       }
       else {
         titleCell.border = Rectangle.NO_BORDER
