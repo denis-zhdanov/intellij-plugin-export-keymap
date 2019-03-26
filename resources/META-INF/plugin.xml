@@ -7,7 +7,7 @@ Usage: <b>Help | Print Keymap</b>
 ]]> 
 </description>
   <vendor email="dmitry.matveev@jetbrains.com">Dmitry Matveev</vendor>
-  <version>2.0</version>
+  <version>2.1</version>
 
   <depends>com.intellij.modules.platform</depends>
 
@@ -15,11 +15,10 @@ Usage: <b>Help | Print Keymap</b>
   
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
-    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.ActionsProfileManager"/>
   </extensions>
   
   <actions>
-      <action id="ExportKeymap" class="org.intellij.plugins.export.keymap.ExportKeymapAction">
+      <action id="ExportKeymap" class="org.intellij.plugins.export.keymap.ExportKeymap">
         <add-to-group group-id="HelpMenu" anchor="after" relative-to-action="ProductivityGuide"/>
       </action>
   </actions>

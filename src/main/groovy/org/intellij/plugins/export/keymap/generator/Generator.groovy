@@ -1,10 +1,9 @@
 package org.intellij.plugins.export.keymap.generator
-
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.intellij.plugins.export.keymap.Bundle
-import org.intellij.plugins.export.keymap.ExportKeymapAction
+import org.intellij.plugins.export.keymap.ExportKeymap
 import org.jetbrains.annotations.NotNull
 import com.itextpdf.text.*
 import org.intellij.plugins.export.keymap.model.*
@@ -17,7 +16,7 @@ import static org.intellij.plugins.export.keymap.generator.GenerationConstants.*
  */
 class Generator {
 
-  def generate(@NotNull java.util.List<DataEntry> data,
+  def generate(@NotNull java.util.ArrayList<DataEntry> data,
                @NotNull String outputPath,
                @NotNull String keymapName)
   {
@@ -36,7 +35,7 @@ class Generator {
     try {
       PdfWriter.getInstance(document, new BufferedOutputStream(new FileOutputStream(context.outputPath)))
     } catch (Exception ex) {
-      ExportKeymapAction.showError(Bundle.message('error.output.is.busy'))
+      ExportKeymap.showError(Bundle.message('error.output.is.busy'))
     }
     document.addTitle (Bundle.message("document.title", context.productName, context.keymapName))
     document.addAuthor(Bundle.message("document.author"))

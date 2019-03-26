@@ -17,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 )
 public class Settings implements PersistentStateComponent<Settings> {
 
-  @Nullable private String myKeymapName;
   @Nullable private String myOutputPath;
   
   @NotNull
@@ -32,17 +31,7 @@ public class Settings implements PersistentStateComponent<Settings> {
 
   @Override
   public void loadState(@NotNull Settings state) {
-    setKeymapName(state.getKeymapName());
     setOutputPath(state.getOutputPath());
-  }
-
-  @Nullable
-  public String getKeymapName() {
-    return myKeymapName;
-  }
-
-  public void setKeymapName(@Nullable String keymapName) {
-    myKeymapName = keymapName;
   }
 
   @Nullable
