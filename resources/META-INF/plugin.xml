@@ -6,7 +6,7 @@ Allows exporting your keymap to a printable PDF document.<br>
 Usage: <b>Help | Print Keymap</b>
 ]]> 
 </description>
-  <vendor email="dmitry.matveev@jetbrains.com">Dmitry Matveev</vendor>
+  <vendor email="dmitry.matveev@jetbrains.com">JetBrains</vendor>
   <version>2.1</version>
 
   <depends>com.intellij.modules.platform</depends>
