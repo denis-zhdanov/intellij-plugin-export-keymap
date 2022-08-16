@@ -6,7 +6,7 @@ plugins {
 
 apply plugin: 'org.jetbrains.intellij'
 group 'intellij-plugin-export-keymap'
-version '1.0'
+version '2.1'
 
 repositories {
     mavenCentral()
@@ -15,9 +15,8 @@ repositories {
 }
 
 intellij {
-    type='IU'
+    type='IC'
     version = '2022.1.1'
-    plugins = ['com.jetbrains.php:221.5591.58']
 }
 
 runIde {

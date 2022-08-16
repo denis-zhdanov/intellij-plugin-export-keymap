@@ -1,20 +1,21 @@
-<idea-plugin allow-bundled-update="true">
+<idea-plugin>
+  <id>com.jetbrains</id>
   <name>Keymap exporter</name>
+  <version>2.1</version>
+  <vendor email="dmitry.matveev@jetbrains.com">Dmitry Matveev</vendor>
+
   <description>
 <![CDATA[
 Allows exporting your keymap to a printable PDF document.<br>
 Usage: <b>Help | Print Keymap</b>
 ]]> 
 </description>
-  <vendor email="dmitry.matveev@jetbrains.com">Dmitry Matveev</vendor>
-  <version>2.1</version>
 
+  <idea-version since-build="212.0"/>
   <depends>com.intellij.modules.platform</depends>
 
-  <idea-version since-build="130.1167"/>
-  
   <extensions defaultExtensionNs="com.intellij">
-    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
+<!--    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>-->
   </extensions>
   
   <actions>
