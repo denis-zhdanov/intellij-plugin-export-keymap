@@ -16,7 +16,7 @@ import static org.intellij.plugins.export.keymap.generator.GenerationConstants.*
  */
 class Generator {
 
-  def generate(@NotNull java.util.ArrayList<DataEntry> data,
+  def generate(@NotNull ArrayList<DataEntry> data,
                @NotNull String outputPath,
                @NotNull String keymapName)
   {

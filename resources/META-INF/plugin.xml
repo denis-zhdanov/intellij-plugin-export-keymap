@@ -15,7 +15,7 @@ Usage: <b>Help | Print Keymap</b>
   <depends>com.intellij.modules.platform</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-<!--    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>-->
+    <applicationService serviceImplementation="org.intellij.plugins.export.keymap.model.Settings"/>
   </extensions>
   
   <actions>
