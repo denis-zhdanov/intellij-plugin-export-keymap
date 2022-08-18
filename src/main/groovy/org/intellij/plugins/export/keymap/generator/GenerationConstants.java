@@ -40,7 +40,6 @@ public class GenerationConstants {
    */
   @NotNull
   private static BaseFont getFont(@NotNull String fontPath) {
-    final BaseFont baseFont;
     final ClassLoader classLoaderToRestore = Thread.currentThread().getContextClassLoader();
     try {
       Thread.currentThread().setContextClassLoader(GenerationConstants.class.getClassLoader());

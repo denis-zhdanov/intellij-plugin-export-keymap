@@ -87,7 +87,7 @@ class GenerationContext {
         try{
         currentColumn().addElement(dataTable)}
         catch (Exception ex){
-           println()
+           println(ex.toString())
         }
     }
 

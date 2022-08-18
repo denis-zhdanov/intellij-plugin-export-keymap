@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="40"
+   height="40"
+   viewBox="0 0 40 40"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="pluginIcon.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs16" />
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="16.68772"
+     inkscape:cx="6.6815598"
+     inkscape:cy="22.711311"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <path
+     fill="#389fd6"
+     fill-rule="evenodd"
+     d="M 1.9400757,2.3858286 H 37.58053 V 28.625526 H 1.9400757 Z M 17.780278,7.4319243 h 3.96005 v 4.0368777 h -3.96005 z m 5.940076,0 h 3.96005 v 4.0368777 h -3.96005 z m 5.940075,0 h 3.960051 v 4.0368777 h -3.960051 z m 0,6.0553157 h 3.960051 v 4.036876 h -3.960051 z m -5.940075,0 h 3.96005 v 4.036876 h -3.96005 z m -11.880151,0 h 3.960051 v 4.036876 h -3.960051 z m -5.9400768,0 h 3.9600505 v 4.036876 H 5.9001262 Z m 0,-6.0553157 H 9.8601767 V 11.468802 H 5.9001262 Z m 5.9400768,0 h 3.960051 v 4.0368777 h -3.960051 z m 5.940075,6.0553157 h 3.96005 v 4.036876 h -3.96005 z m 8.910113,10.09219 H 12.830215 v -4.036877 h 13.860176 z"
+     id="path10"
+     style="stroke-width:0.99957" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.8654px;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#4d4d4d;fill-opacity:1;stroke-width:1.57212"
+     x="2.0069642"
+     y="36.191341"
+     id="text176"
+     transform="scale(0.97759538,1.0229181)"><tspan
+       sodipodi:role="line"
+       id="tspan1218"
+       x="2.0069642"
+       y="36.191341">.PDF</tspan></text>
+</svg>

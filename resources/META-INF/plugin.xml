@@ -1,12 +1,17 @@
 <idea-plugin>
   <id>com.jetbrains</id>
-  <name>Keymap exporter</name>
-  <version>2.1</version>
-  <vendor email="dmitry.matveev@jetbrains.com">Dmitry Matveev</vendor>
+  <name>Keymap Exporter</name>
+  <version>2.3</version>
+  <vendor email="dmitry.matveev@jetbrains.com">JetBrains</vendor>
+
+  <change-notes>
+    Compatibility with the latest IDE versions updated, new actions added.
+  </change-notes>
 
   <description>
 <![CDATA[
-Allows exporting your keymap to a printable PDF document.<br>
+Export your default or custom keymap to a printable PDF document.
+<br>
 Usage: <b>Help | Print Keymap</b>
 ]]> 
 </description>

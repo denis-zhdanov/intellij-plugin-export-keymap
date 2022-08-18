@@ -27,9 +27,8 @@ import java.util.List;
 public class ExportKeymap extends AnAction implements DumbAware {
 
     public ExportKeymap() {
-        getTemplatePresentation().setText("Print keymap");
-        getTemplatePresentation().setDescription(
-                "Create a PDF document that lists actions and shortcuts from the selected keymap");
+        getTemplatePresentation().setText(Bundle.message("action.print.keymap.text"));
+        getTemplatePresentation().setDescription(Bundle.message("action.create.pdf.description"));
     }
 
     @Override
@@ -38,11 +37,12 @@ public class ExportKeymap extends AnAction implements DumbAware {
         Settings settings = Settings.getInstance();
         Keymap[] keymaps = KeymapManagerEx.getInstanceEx().getAllKeymaps();
 
-        String outputPathLabelText = "Output path:";
+        String outputPathLabelText = Bundle.message("label.output.path");
 
         TextFieldWithBrowseButton pathControl = new TextFieldWithBrowseButton();
 
-        pathControl.addBrowseFolderListener("Choose Output Path for Keymap's PDF", outputPathLabelText, null,
+        pathControl.addBrowseFolderListener(Bundle.message("dialog.title.choose.output.path"),
+                outputPathLabelText, null,
                 FileChooserDescriptorFactory.createSingleFileDescriptor(),
                 TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
 
@@ -58,7 +58,7 @@ public class ExportKeymap extends AnAction implements DumbAware {
         DialogWrapper dialog = new DialogWrapper(PlatformDataKeys.PROJECT.getData(e.getDataContext())) {
             {
                 init();
-                setTitle("Print Keymap");
+                setTitle(Bundle.message("dialog.title.print.keymap"));
             }
 
             @Override
@@ -66,7 +66,7 @@ public class ExportKeymap extends AnAction implements DumbAware {
                 JPanel dialogPanel = new JPanel(new GridBagLayout());
                 GridBagConstraints c = new GridBagConstraints();
 
-                JLabel labelKeymap = new JLabel("Keymap:");
+                JLabel labelKeymap = new JLabel(Bundle.message("label.keymap"));
                 JLabel outputPathLabel = new JLabel(outputPathLabelText);
 
                 c.fill = GridBagConstraints.HORIZONTAL;
@@ -108,7 +108,7 @@ public class ExportKeymap extends AnAction implements DumbAware {
             try {
                 Desktop.getDesktop().open(new File(path));
             } catch (IOException ex) {
-                showError("Cannot open the generated PDF document.");
+                showError(Bundle.message("cannot.open.the.generated.pdf.document"));
             }
         }
     }
@@ -118,7 +118,7 @@ public class ExportKeymap extends AnAction implements DumbAware {
     private String validatePath(@Nullable String path, @NotNull String keymapName) {
         if (path == null) {
 
-            showError("Cannot create PDF document.<br>Reason: output path is undefined");
+            showError(Bundle.message("cannot.create.pdf.document"));
             return null;
         }
 
