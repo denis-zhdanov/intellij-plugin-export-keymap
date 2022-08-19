@@ -1,7 +1,7 @@
 <idea-plugin>
-  <id>com.jetbrains</id>
+  <id>Keymap exporter</id>
   <name>Keymap Exporter</name>
-  <version>2.3</version>
+  <version>2.4</version>
   <vendor email="dmitry.matveev@jetbrains.com">JetBrains</vendor>
 
   <change-notes>
@@ -10,13 +10,13 @@
 
   <description>
 <![CDATA[
-Export your default or custom keymap to a printable PDF document.
+Export any of the default or custom keymaps to a printable PDF document.
 <br>
 Usage: <b>Help | Print Keymap</b>
 ]]> 
 </description>
 
-  <idea-version since-build="212.0"/>
+  <idea-version since-build="211.1"/>
   <depends>com.intellij.modules.platform</depends>
 
   <extensions defaultExtensionNs="com.intellij">

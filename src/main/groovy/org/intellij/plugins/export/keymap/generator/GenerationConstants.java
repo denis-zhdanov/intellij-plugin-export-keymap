@@ -12,8 +12,9 @@ import org.jetbrains.annotations.NotNull;
 public class GenerationConstants {
 
   public static final BaseColor COLOR_BACKGROUND_AND_LINES = new BaseColor(230, 230, 230);
+  public static final BaseColor COLOR_HEADER = new BaseColor(150, 150, 150);
 
-  public static final float           GAP_BETWEEN_COLUMNS    = 20f;
+  public static final float           GAP_BETWEEN_COLUMNS    = 15f;
   public static final float           PADDING_HEADER_BOTTOM  = 5f;
   public static final float           HEADER_FONT_SIZE       = 14f;
   public static final float           ACTION_GROUP_FONT_SIZE = 8f;

@@ -1,4 +1,5 @@
 package org.intellij.plugins.export.keymap.generator
+
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
@@ -20,7 +21,7 @@ class Generator {
                @NotNull String outputPath,
                @NotNull String keymapName)
   {
-    def context = new GenerationContext(outputPath: outputPath, data: data, keymapName: keymapName)
+    def context = new GenerationContext(outputPath: outputPath, listOfDataEntries: data, keymapName: keymapName)
     def table = doGenerate(context)
     context.prepareToRealGeneration(table)
     doGenerate(context)
@@ -28,8 +29,7 @@ class Generator {
 
   private def doGenerate(@NotNull GenerationContext context) {
     def document = new Document()
-    float margin = 15f
-    document.setMargins(margin, margin, margin, margin)
+    document.setMargins(5f, 7f, 12f, 10f)
     context.document = document
     document.setPageSize(PageSize.A4.rotate())
     try {
@@ -48,11 +48,35 @@ class Generator {
     COLUMNS_NUMBER.times { rootTable.addCell(
       new PdfPCell(paddingLeft: 0f, paddingRight: GAP_BETWEEN_COLUMNS, border: Rectangle.NO_BORDER)
     )}
-    rootTable.getRow(0).getCells().each { context.columns << it }
+    for (PdfPCell rootTableCell in rootTable.getRow(0).getCells()) {
+      context.listOfColumnsInRootTable << rootTableCell
+    }
 
     addData(context)
-    addHeaderTable(document, context)
-    document.add(rootTable)
+
+    PdfPTable pageTable = new PdfPTable(2)
+    pageTable.setWidthPercentage(100)
+    pageTable.extendLastRow = true
+    pageTable.setWidths([1, 30] as float[]);
+    Paragraph verticalTitleParagraph =
+            new Paragraph(Bundle.message("document.header", context.productName, context.keymapName), HEADER_FONT)
+    verticalTitleParagraph.setPaddingTop(0f)
+    verticalTitleParagraph.getFont().setColor(COLOR_HEADER)
+
+    PdfPCell verticalHeaderCell = new PdfPCell(paddingLeft: 0f,
+            paddingRight: 5f,
+            paddingBottom: 30f,
+            rotation: 90,
+            border: Rectangle.NO_BORDER)
+    verticalHeaderCell.addElement(verticalTitleParagraph)
+    pageTable.addCell(verticalHeaderCell)
+    PdfPCell rootTableCell = new PdfPCell(paddingLeft: 0f,
+            paddingRight: 0f,
+            border: Rectangle.NO_BORDER)
+    rootTableCell.addElement(rootTable)
+
+    pageTable.addCell(rootTableCell)
+    document.add(pageTable)
     document.close()
     rootTable
   }
@@ -66,7 +90,7 @@ class Generator {
           addSectionTitles(activeHeaders, context)
           activeHeaders.clear()
         }
-        
+
         def paddingTopBottom = 2f
         def paddingLeft = 3f
 
@@ -78,8 +102,8 @@ class Generator {
         valueCell.paddingTop = paddingTopBottom
         valueCell.paddingBottom = paddingTopBottom
         valueCell.paddingLeft = paddingLeft
-        context.dataTable.addCell(valueCell)
-        
+        context.actionShortcutSubTable.addCell(valueCell)
+
         def keyParagraph = new Paragraph(data.shortcut, ACTION_SHORTCUT_FONT)
         keyParagraph.alignment = Element.ALIGN_MIDDLE
         def keyCell = new PdfPCell(keyParagraph)
@@ -89,14 +113,14 @@ class Generator {
         keyCell.paddingBottom = paddingTopBottom
         keyCell.paddingLeft = paddingLeft
         keyCell.verticalAlignment = Element.ALIGN_MIDDLE
-        context.dataTable.addCell(keyCell)
+        context.actionShortcutSubTable.addCell(keyCell)
 
 
 
       }
-    
+
       @Override void visitHeader(@NotNull org.intellij.plugins.export.keymap.model.Header data) { activeHeaders << data }
-    
+
       @Override
       void visitColumnBreak(@NotNull ColumnBreak columnBreak) {
         if (context.realGenerationIteration) {
@@ -104,21 +128,14 @@ class Generator {
         }
       }
     }
-    
-    context.data.each { it.invite(visitor) }
 
-  }
+    context.listOfDataEntries.each { it.invite(visitor) }
 
-  private static def addHeaderTable(@NotNull Document document, @NotNull GenerationContext context) {
-    if (!context.realGenerationIteration) {
-      return
-    }
-    context.addHeaderTable(document)
   }
 
   private static void addSectionTitles(@NotNull java.util.List<Header> headers, @NotNull GenerationContext context) {
     context.updateColumn(headers.size() + 1 /* at least one data row */)
-    context.newTable()
+    context.createActionShortcutSubTable()
     def addCell = { String title, boolean withBorder ->
       def titleCell = new PdfPCell(new Paragraph(title, ACTION_GROUP_FONT))
       titleCell.colspan = 2
@@ -130,8 +147,8 @@ class Generator {
       else {
         titleCell.border = Rectangle.NO_BORDER
       }
-      
-      context.dataTable.addCell(titleCell)
+
+      context.actionShortcutSubTable.addCell(titleCell)
     }
     for (header in headers.subList(0, headers.size() - 1)) {
       addCell(header.name, false)

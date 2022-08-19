@@ -24,7 +24,7 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="16.68772"
-     inkscape:cx="6.6815598"
+     inkscape:cx="3.9849662"
      inkscape:cy="22.711311"
      inkscape:window-width="1920"
      inkscape:window-height="1137"
@@ -35,18 +35,24 @@
   <path
      fill="#389fd6"
      fill-rule="evenodd"
-     d="M 1.9400757,2.3858286 H 37.58053 V 28.625526 H 1.9400757 Z M 17.780278,7.4319243 h 3.96005 v 4.0368777 h -3.96005 z m 5.940076,0 h 3.96005 v 4.0368777 h -3.96005 z m 5.940075,0 h 3.960051 v 4.0368777 h -3.960051 z m 0,6.0553157 h 3.960051 v 4.036876 h -3.960051 z m -5.940075,0 h 3.96005 v 4.036876 h -3.96005 z m -11.880151,0 h 3.960051 v 4.036876 h -3.960051 z m -5.9400768,0 h 3.9600505 v 4.036876 H 5.9001262 Z m 0,-6.0553157 H 9.8601767 V 11.468802 H 5.9001262 Z m 5.9400768,0 h 3.960051 v 4.0368777 h -3.960051 z m 5.940075,6.0553157 h 3.96005 v 4.036876 h -3.96005 z m 8.910113,10.09219 H 12.830215 v -4.036877 h 13.860176 z"
+     d="M 6,22 H 34 V 38 H 6 Z m 12.444444,3.076923 h 3.111113 v 2.461541 h -3.111113 z m 4.666668,0 h 3.11111 v 2.461541 h -3.11111 z m 4.666666,0 h 3.111112 v 2.461541 h -3.111112 z m 0,3.692309 h 3.111112 v 2.461538 h -3.111112 z m -4.666666,0 h 3.11111 v 2.461538 h -3.11111 z m -9.333333,0 h 3.111112 v 2.461538 h -3.111112 z m -4.6666678,0 H 12.222223 V 31.23077 H 9.1111111 Z m 0,-3.692309 h 3.1111118 v 2.461541 H 9.1111111 Z m 4.6666678,0 h 3.111112 v 2.461541 h -3.111112 z m 4.666665,3.692309 h 3.111113 v 2.461538 h -3.111113 z m 6.999999,6.153846 H 14.555557 v -2.461541 h 10.888886 z"
      id="path10"
-     style="stroke-width:0.99957" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.8654px;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#4d4d4d;fill-opacity:1;stroke-width:1.57212"
-     x="2.0069642"
-     y="36.191341"
-     id="text176"
-     transform="scale(0.97759538,1.0229181)"><tspan
-       sodipodi:role="line"
-       id="tspan1218"
-       x="2.0069642"
-       y="36.191341">.PDF</tspan></text>
+     style="stroke-width:0.691833" />
+  <g
+     fill="#6e6e6e"
+     transform="matrix(2.5714286,0,0,2.4658407,2,2)"
+     id="g8"
+     style="fill:#808080;fill-opacity:1">
+    <path
+       d="M 1.1666667,4 H 12.833333 C 13.477666,4 14,4.4477152 14,5 V 9 H 0 V 5 C 0,4.4477152 0.52233446,4 1.1666667,4 Z M 12,5 v 1 h 1 V 5 Z"
+       id="path2"
+       style="fill:#808080;fill-opacity:1" />
+    <rect
+       width="8"
+       height="3"
+       x="3"
+       id="rect6"
+       y="0"
+       style="fill:#808080;fill-opacity:1" />
+  </g>
 </svg>

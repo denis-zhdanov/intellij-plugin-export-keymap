@@ -19,12 +19,12 @@ import static org.intellij.plugins.export.keymap.generator.GenerationConstants.*
  */
 class GenerationContext {
 
-    java.util.List<PdfPCell> columns = []
-    java.util.List<DataEntry> data = []
-    PdfPTable dataTable
+    java.util.List<PdfPCell> listOfColumnsInRootTable = []
+    java.util.List<DataEntry> listOfDataEntries = []
+    PdfPTable actionShortcutSubTable
 
     String productName = ApplicationNamesInfo.getInstance().fullProductName;
-    int currentColumnIndex
+    int indexOfCurrentColumnInRootTable
     String keymapName
     Document document
     String outputPath
@@ -43,7 +43,6 @@ class GenerationContext {
 
     def updateColumn(int rowsToAdvance) {
         if (first) {
-            //addHeader()
             first = false
         }
         if (!realGenerationIteration || !rowHeights) {
@@ -56,48 +55,33 @@ class GenerationContext {
     }
 
     def nextColumn() {
-        if (currentColumnIndex >= COLUMNS_NUMBER-1) {
+        if (indexOfCurrentColumnInRootTable >= COLUMNS_NUMBER-1) {
             document.newPage();
-            currentColumnIndex = 0;
+            indexOfCurrentColumnInRootTable = 0;
         } else {
-            currentColumnIndex++;
+            indexOfCurrentColumnInRootTable++;
         }
         maxRealColumnHeight = Math.max(maxRealColumnHeight, currentHeight)
         currentHeight = 0;
     }
 
-
-    void addHeaderTable(Document document) {
-
-        PdfPTable headerTable = new PdfPTable(1)
-        headerTable.setWidthPercentage(100)
-        def headerCell =
-                new PdfPCell(new Paragraph(Bundle.message("document.header", productName, keymapName), HEADER_FONT))
-        headerCell.border = Rectangle.NO_BORDER
-        headerCell.paddingBottom = PADDING_HEADER_BOTTOM
-        headerCell.paddingTop = 0f
-        headerTable.addCell(headerCell)
-        document.add(headerTable)
-    }
-
-    def newTable() {
-        dataTable = new PdfPTable(2)
-        dataTable.setWidthPercentage(100)
-        dataTable.setWidths([5, 4] as float[]);
+    def createActionShortcutSubTable() {
+        actionShortcutSubTable = new PdfPTable(2)
+        actionShortcutSubTable.setWidthPercentage(100)
+        actionShortcutSubTable.setWidths([5, 4] as float[]);
         try{
-        currentColumn().addElement(dataTable)}
+            currentColumnInRootTable().addElement(actionShortcutSubTable)}
         catch (Exception ex){
            println(ex.toString())
         }
     }
 
-
-    def currentColumn() { columns[currentColumnIndex] }
+    def currentColumnInRootTable() { listOfColumnsInRootTable[indexOfCurrentColumnInRootTable] }
 
     def prepareToRealGeneration(@NotNull PdfPTable table) {
         first = true
         realGenerationIteration = true
-        columns.clear()
+        listOfColumnsInRootTable.clear()
         def rootCellElements = table.getRow(0).cells.first().compositeElements
         def header = rootCellElements.first()
         headerWidth = header.totalWidth

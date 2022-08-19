@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'org.jetbrains.intellij'
 group 'intellij-plugin-export-keymap'
-version '2.3'
+version '2.4'
 
 repositories {
     mavenCentral()
@@ -15,9 +15,8 @@ repositories {
 }
 
 intellij {
-    type='IC'
     version = '2022.2.1'
-//    pluginName 'intellij-plugin-export-keymap'
+    updateSinceUntilBuild = false
 }
 
 runIde {
@@ -34,4 +33,8 @@ sourceSets {
     main {
         resources.srcDir 'resources'
     }
+}
+
+publishPlugin {
+    token = System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken")
 }

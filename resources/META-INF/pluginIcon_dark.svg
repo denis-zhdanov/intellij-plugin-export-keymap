@@ -4,7 +4,7 @@
    height="40"
    viewBox="0 0 40 40"
    version="1.1"
-   id="svg1338"
+   id="svg12"
    sodipodi:docname="pluginIcon_dark.svg"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -12,9 +12,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs1342" />
+     id="defs16" />
   <sodipodi:namedview
-     id="namedview1340"
+     id="namedview14"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -23,29 +23,36 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="11.8"
-     inkscape:cx="16.525424"
-     inkscape:cy="16.864407"
+     inkscape:zoom="16.68772"
+     inkscape:cx="3.9849662"
+     inkscape:cy="22.711311"
      inkscape:window-width="1920"
      inkscape:window-height="1137"
-     inkscape:window-x="1912"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg1338" />
+     inkscape:current-layer="svg12" />
   <path
-     fill="#3592c4"
+     fill="#3592C4"
      fill-rule="evenodd"
-     d="M 2.2542373,2.6779661 H 38.254237 V 28.677966 H 2.2542373 Z m 15.9999997,5 h 4 v 3.9999999 h -4 z m 6,0 h 4 v 3.9999999 h -4 z m 6,0 h 4 v 3.9999999 h -4 z m 0,5.9999999 h 4 v 4 h -4 z m -6,0 h 4 v 4 h -4 z m -12,0 h 4 v 4 h -4 z m -5.9999997,0 h 3.9999997 v 4 H 6.2542373 Z m 0,-5.9999999 H 10.254237 V 11.677966 H 6.2542373 Z m 5.9999997,0 h 4 v 3.9999999 h -4 z m 6,5.9999999 h 4 v 4 h -4 z m 9,10 h -14 v -4 h 14 z"
-     id="path1336" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.8654px;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#4d4d4d;fill-opacity:1;stroke-width:1.57212"
-     x="2.2775607"
-     y="36.878712"
-     id="text176"
-     transform="scale(0.97759538,1.0229181)"><tspan
-       sodipodi:role="line"
-       id="tspan1218"
-       x="2.2775607"
-       y="36.878712">.PDF</tspan></text>
+     d="M 6,22 H 34 V 38 H 6 Z m 12.444444,3.076923 h 3.111113 v 2.461541 h -3.111113 z m 4.666668,0 h 3.11111 v 2.461541 h -3.11111 z m 4.666666,0 h 3.111112 v 2.461541 h -3.111112 z m 0,3.692309 h 3.111112 v 2.461538 h -3.111112 z m -4.666666,0 h 3.11111 v 2.461538 h -3.11111 z m -9.333333,0 h 3.111112 v 2.461538 h -3.111112 z m -4.6666678,0 H 12.222223 V 31.23077 H 9.1111111 Z m 0,-3.692309 h 3.1111118 v 2.461541 H 9.1111111 Z m 4.6666678,0 h 3.111112 v 2.461541 h -3.111112 z m 4.666665,3.692309 h 3.111113 v 2.461538 h -3.111113 z m 6.999999,6.153846 H 14.555557 v -2.461541 h 10.888886 z"
+     id="path10"
+     style="stroke-width:0.691833" />
+  <g
+     fill="#6e6e6e"
+     transform="matrix(2.5714286,0,0,2.4658407,2,2)"
+     id="g8"
+     style="fill:#999999;fill-opacity:1">
+    <path
+       d="M 1.1666667,4 H 12.833333 C 13.477666,4 14,4.4477152 14,5 V 9 H 0 V 5 C 0,4.4477152 0.52233446,4 1.1666667,4 Z M 12,5 v 1 h 1 V 5 Z"
+       id="path2"
+       style="fill:#999999;fill-opacity:1" />
+    <rect
+       width="8"
+       height="3"
+       x="3"
+       id="rect6"
+       y="0"
+       style="fill:#999999;fill-opacity:1" />
+  </g>
 </svg>
