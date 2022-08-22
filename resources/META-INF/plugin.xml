@@ -1,11 +1,11 @@
 <idea-plugin>
   <id>Keymap exporter</id>
   <name>Keymap Exporter</name>
-  <version>2.4</version>
+  <version>2.5</version>
   <vendor email="dmitry.matveev@jetbrains.com">JetBrains</vendor>
 
   <change-notes>
-    Compatibility with the latest IDE versions updated, new actions added.
+    New plugin icon and a clearer name for the generated PDF file.
   </change-notes>
 
   <description>

@@ -1,15 +1,14 @@
 package org.intellij.plugins.export.keymap.generator
 
-import com.intellij.openapi.application.ApplicationNamesInfo
+
+import com.itextpdf.text.Document
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
-import org.intellij.plugins.export.keymap.Bundle
+import org.intellij.plugins.export.keymap.Helpers
 import org.intellij.plugins.export.keymap.model.DataEntry
 import org.jetbrains.annotations.NotNull
 
-import com.itextpdf.text.*
-
-import static org.intellij.plugins.export.keymap.generator.GenerationConstants.*
+import static org.intellij.plugins.export.keymap.generator.GenerationConstants.COLUMNS_NUMBER
 
 /**
  * Encapsulates temporary info used during PDF generation.
@@ -23,7 +22,7 @@ class GenerationContext {
     java.util.List<DataEntry> listOfDataEntries = []
     PdfPTable actionShortcutSubTable
 
-    String productName = ApplicationNamesInfo.getInstance().fullProductName;
+    String productName = Helpers.getProductName();
     int indexOfCurrentColumnInRootTable
     String keymapName
     Document document
