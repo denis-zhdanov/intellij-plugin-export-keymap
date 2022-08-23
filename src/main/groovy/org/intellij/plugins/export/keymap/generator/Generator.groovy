@@ -29,7 +29,7 @@ class Generator {
 
   private def doGenerate(@NotNull GenerationContext context) {
     def document = new Document()
-    document.setMargins(5f, 7f, 12f, 10f)
+    document.setMargins(5f, 7f, 10f, 10f)
     context.document = document
     document.setPageSize(PageSize.A4.rotate())
     try {
@@ -143,6 +143,7 @@ class Generator {
       if (withBorder) {
         titleCell.border = Rectangle.BOTTOM
         titleCell.borderColor = COLOR_BACKGROUND_AND_LINES
+          titleCell.paddingTop = 1f
       }
       else {
         titleCell.border = Rectangle.NO_BORDER

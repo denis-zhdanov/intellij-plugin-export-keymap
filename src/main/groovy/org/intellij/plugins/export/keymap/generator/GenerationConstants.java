@@ -15,10 +15,9 @@ public class GenerationConstants {
   public static final BaseColor COLOR_HEADER = new BaseColor(150, 150, 150);
 
   public static final float           GAP_BETWEEN_COLUMNS    = 15f;
-  public static final float           PADDING_HEADER_BOTTOM  = 5f;
   public static final float           HEADER_FONT_SIZE       = 14f;
-  public static final float           ACTION_GROUP_FONT_SIZE = 8f;
-  public static final float           DATA_FONT_SIZE         = 7f;
+  public static final float           ACTION_GROUP_FONT_SIZE = 7f;
+  public static final float           DATA_FONT_SIZE         = 6.5f;
   public static final int             COLUMNS_NUMBER         = 3;
 
   private static final String NORMAL_FONT_NAME = "font/DejaVuLGCSans.ttf";

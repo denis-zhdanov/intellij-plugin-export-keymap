@@ -20,9 +20,10 @@ new ActionData(id: ['EditorCompleteStatement'], description: 'Complete Statement
 new ActionData(id: ['ParameterInfo'], description: 'Parameter Information'),
 new ActionData(id: ['QuickImplementations']),
 new ActionData(id: ['QuickJavaDoc', 'ExternalJavaDoc'], description: 'Quick/External Documentation'),
-new ActionData(id: ['NewElement'], description: 'Generate Code'),
+new ActionData(id: ['Generate']),
 new ActionData(id: ['OverrideMethods', 'ImplementMethods'], description: 'Override/Implement Members'),
 new ActionData(id: ['SurroundWith']),
+new ActionData(id: ['Unwrap']),
 new ActionData(id: ['CommentByLineComment', 'CommentByBlockComment'], description: 'Comment with Line/Block Comment'),
 new ActionData(id: ['EditorSelectWord', 'EditorUnSelectWord'], description: 'Extend/Shrink Selection'),
 new ActionData(id: ['EditorContextInfo']),
@@ -47,6 +48,7 @@ new ActionData(id: ['SaveAll']),
 
 new Header(depth: 0, name: 'ANALYZE AND EXPLORE'),
 new ActionData(id: ['InspectCode']),
+new ActionData(id: ['ActivateProblemsViewToolWindow'], description: 'Problems Tool Window'),
 new ActionData(id: ['ShowErrorDescription'], description: 'Show Error Description'),
 new ActionData(id: ['GotoNextError', 'GotoPreviousError'], description: 'Next/Previous Highlighted Error'),
 new ActionData(id: ['ReSharperGotoNextErrorInSolution', 'ReSharperGotoPrevErrorInSolution'],
@@ -57,6 +59,7 @@ new ActionData(id: ['InspectThis']),
 new ActionData(id: ['TypeHierarchy']),
 new ActionData(id: ['MethodHierarchy']),
 new ActionData(id: ['CallHierarchy']),
+new ActionData(id: ['ActivateTODOToolWindow'], description: 'TODO Tool Window'),
 
 
 //                VCS/LOCAL HISTORY
@@ -69,6 +72,7 @@ new ActionData(id: ['RecentChanges']),
 new ActionData(id: ['ChangesView.Revert']),
 new ActionData(id: ['Vcs.Push']),
 new ActionData(id: ['VcsShowNextChangeMarker','VcsShowPrevChangeMarker'], description: 'Next/Previous Change'),
+new ActionData(id: ['ActivateCommitToolWindow','ActivateTODOToolWindow'], description: 'Commit/Version Control Tool Window'),
 
 
 new ColumnBreak(),
@@ -79,11 +83,8 @@ new Header(depth: 0, name: 'MASTER YOUR IDE'),
 new ActionData(id: ['GotoAction']),
 new ActionData(id: ['RiderOpenSolution'], description: 'Open Solution or Project'),
 new ActionData(id: ['OpenFile'], description: 'Open File or Folder'),
-new ActionData(id: ['ActivateMessagesToolWindow', 'ActivateProjectToolWindow', 'ActivateFavoritesToolWindow', 'ActivateFindToolWindow',
-                    'ActivateRunToolWindow', 'ActivateDebugToolWindow', 'ActivateTODOToolWindow', 'ActivateStructureToolWindow',
-                    'ActivateHierarchyToolWindow', 'ActivateChangesToolWindow'],
-        shortcut: 'Alt+[0-9]',
-        description: 'Open a Tool Window'),
+new ActionData(id: ['ActivateProjectToolWindow'], description: 'Project/Explorer Tool Window'),
+new ActionData(id: ['NewElement'], description: 'Add New File'),
 new ActionData(id: ['Synchronize']),
 new ActionData(id: ['ToggleFullScreen']),
 //                   new ActionData(id: ['CodeInspection.OnEditor']),
@@ -91,13 +92,12 @@ new ActionData(id: ['QuickChangeScheme']),
 new ActionData(id: ['ShowSettings']),
 new ActionData(id: ['ShowProjectStructureSettings']),
 new ActionData(id: ['EditSource']),
-new ActionData(id: ['ShowNavBar']),
 new ActionData(id: ['JumpToLastWindow']),
 new ActionData(id: ['HideActiveWindow','HideAllWindows'], description: 'Hide Active/All Tool Windows'),
 //new ActionData(id: ['NextSplitter']),
 new ActionData(id: ['NextTab', 'PreviousTab'], description: 'Go to Next/Previous Editor Tab'),
 new ActionData(id: ['EditorEscape'], description: 'Go to Editor (from a Tool Window)'),
-new ActionData(id: ['CloseActiveTab', 'CloseContent'], description: 'Close Active Tab/Window'),
+new ActionData(id: ['CloseContent'], description: 'Close Active Editor Tab'),
 
 //                FIND EVERYTHING
 
@@ -121,11 +121,11 @@ new ActionData(id: ['GotoDeclaration']),
 new ActionData(id: ['GotoTypeDeclaration']),
 new ActionData(id: ['GotoSuperMethod', 'GotoImplementation'], description: 'Go to Base/Derived Symbols'),
 new ActionData(id: ['ReSharperGotoImplementation'], description: 'Go to Implementations'),
-new ActionData(id: ['FindUsages', 'FindUsagesInFile'], description: 'Find Usages in Project/File'),
+new ActionData(id: ['FindUsages']),
 new ActionData(id: ['HighlightUsagesInFile']),
 new ActionData(id: ['ShowUsages']),
 
-//                NAVIGATE IN CONTEXT
+//                NAVIGATE CONTEXT
 
 new Header(depth: 0, name: 'NAVIGATE CONTEXT'),
 new ActionData(id: ['SelectIn']),
@@ -147,6 +147,8 @@ new ActionData(id: ['GotoBookmark0', 'GotoBookmark1', 'GotoBookmark2', 'GotoBook
         description: 'Go to Numbered Bookmark'),
 new ActionData(id: ['GotoNextBookmark','GotoPreviousBookmark'], description: 'Next/Previous Bookmark'),
 new ActionData(id: ['ShowBookmarks']),
+new ActionData(id: ['ActivateFindToolWindow'], description: 'Find Tool Window'),
+new ActionData(id: ['ActivateBookmarksToolWindow'], description: 'Bookmarks Tool Window'),
 
 new ColumnBreak(),
 
@@ -181,6 +183,8 @@ new ActionData(id: ['ToggleTemporaryLineBreakpoint']),
 new ActionData(id: ['ToggleBreakpointEnabled'], description: 'Enable/Disable Breakpoint'),
 new ActionData(id: ['EditBreakpoint']),
 new ActionData(id: ['ViewBreakpoints']),
+new ActionData(id: ['ActivateRunToolWindow','ActivateDebugToolWindow'], description: 'Run/Debug Tool Window'),
+new ActionData(id: ['ActivateServicesToolWindow'], description: 'Services Tool Window'),
 
 //                UNIT TESTS (Rider)
 
@@ -199,6 +203,7 @@ new ActionData(id: ['ShowRecentTests']),
 new ActionData(id: ['GotoTest']),
 new ActionData(id: ['SwitchCoverage']),
 new ActionData(id: ['Coverage']),
+new ActionData(id: ['ActivateUnitTestsToolWindow'], description: 'Unit Tests Tool Window'),
 
 //                REFACTORINGS
 
