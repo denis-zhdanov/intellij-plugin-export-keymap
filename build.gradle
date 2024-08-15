@@ -1,12 +1,12 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.8.0'
+    id 'org.jetbrains.intellij' version '1.17.3'
 }
 
 apply plugin: 'groovy'
 apply plugin: 'org.jetbrains.intellij'
 group 'intellij-plugin-export-keymap'
-version '2.6'
+version '2.7'
 
 repositories {
     mavenCentral()
@@ -15,22 +15,19 @@ repositories {
 }
 
 intellij {
-    version = '2022.2.1'
+    version = '2023.1.1'
     updateSinceUntilBuild = false
-    //localPath = "C:\\Users\\d\\AppData\\Local\\JetBrains\\Toolbox\\apps\\Rider\\ch-1\\222.3345.129"
-    //localPath = "C:\\Users\\d\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\212.5712.43.2112.8815526"
-    //localPath = "C:\\Users\\d\\AppData\\Local\\JetBrains\\Toolbox\\apps\\IDEA-U\\ch-0\\222.3739.54"
-
 }
 
 runIde {
     //idea.platform.prefix ='RD'
-    //ideDir = file('C://Users/d/AppData/Local/JetBrains/Toolbox/apps/PhpStorm/ch-0/221.5591.58')
+    ideDir = file('C://Users/d/AppData/Local/Programs/Rider 3')
+    jvmArgs("-Dkeymap.current.os.only=false")
 }
 
 dependencies {
-    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.12'
-    implementation group: 'org.codehaus.groovy', name: 'groovy', version: '2.5.14'
+    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.4'
+    implementation group: 'org.codehaus.groovy', name: 'groovy', version: '3.0.22'
 }
 
 sourceSets {

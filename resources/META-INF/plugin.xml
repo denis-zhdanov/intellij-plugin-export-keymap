@@ -1,22 +1,22 @@
 <idea-plugin>
   <id>Keymap exporter</id>
   <name>Keymap Exporter</name>
-  <version>2.6</version>
+  <version>2.7</version>
   <vendor email="dmitry.matveev@jetbrains.com">JetBrains</vendor>
 
   <change-notes>
-    New plugin icon and a clearer name for the generated PDF file.
+    Ability to generate CSV files, plus several new actions.
   </change-notes>
 
   <description>
 <![CDATA[
-Export any of the default or custom keymaps to a printable PDF document.
+Export any of the default or custom keymaps to a printable PDF document or CSV.
 <br>
 Usage: <b>Help | Print Keymap</b>
 ]]> 
 </description>
 
-  <idea-version since-build="211.1"/>
+  <idea-version since-build="231"/>
   <depends>com.intellij.modules.platform</depends>
 
   <extensions defaultExtensionNs="com.intellij">

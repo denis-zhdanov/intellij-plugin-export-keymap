@@ -36,6 +36,8 @@ public class ExportKeymap extends AnAction implements DumbAware {
         String outputPathLabelText = Bundle.message("label.output.path");
 
         TextFieldWithBrowseButton pathControl = new TextFieldWithBrowseButton();
+        JRadioButton pdfRadioButton = new JRadioButton("PDF");
+        JRadioButton csvRadioButton = new JRadioButton("CSV");
 
         pathControl.addBrowseFolderListener(Bundle.message("dialog.title.choose.output.path"),
                 outputPathLabelText, null,
@@ -82,6 +84,22 @@ public class ExportKeymap extends AnAction implements DumbAware {
                 c.gridy = 1;
                 dialogPanel.add(pathControl, c);
 
+// Group the radio buttons.
+                ButtonGroup group = new ButtonGroup();
+                group.add(pdfRadioButton);
+                group.add(csvRadioButton);
+
+// By default, set the PDF radio button to be selected
+                pdfRadioButton.setSelected(true);
+
+// Add the radio buttons to the dialog panel
+                c.gridx = 0;
+                c.gridy = 2;
+                dialogPanel.add(pdfRadioButton, c);
+
+                c.gridx = 1;
+                dialogPanel.add(csvRadioButton, c);
+
                 return dialogPanel;
             }
         };
@@ -91,13 +109,17 @@ public class ExportKeymap extends AnAction implements DumbAware {
             return;
 
         Keymap keymap = (Keymap) keymapComboBox.getSelectedItem();
+        String format = "PDF";
+        if (csvRadioButton.isSelected()){
+            format = "CSV";
+        }
 
         String path = pathControl.getText().trim();
         settings.setOutputPath(path);
-        path = Helpers.validatePath(path, keymap.getPresentableName());
+        path = Helpers.validatePath(path, keymap.getPresentableName(), format);
         if (path == null) return;
 
-        GeneratorFacade.generate(keymap, new CommonActionsProfile(), path);
+        GeneratorFacade.generate(keymap, new CommonActionsProfile(), path, format);
 
         if (Desktop.isDesktopSupported()) {
             try {

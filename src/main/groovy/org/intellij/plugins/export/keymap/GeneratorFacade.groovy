@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.KeyboardShortcut
 import com.intellij.openapi.keymap.Keymap
 import com.intellij.openapi.keymap.KeymapUtil
+import org.intellij.plugins.export.keymap.generator.CsvGenerator
 import org.intellij.plugins.export.keymap.generator.Generator
 import org.intellij.plugins.export.keymap.model.*
 import org.jetbrains.annotations.NotNull
@@ -16,7 +17,7 @@ class GeneratorFacade {
 
     static def generate(
             @NotNull Keymap keymap,
-            @NotNull ActionsProfile profile, @NotNull String outputPath) {
+            @NotNull ActionsProfile profile, @NotNull String outputPath, @NotNull String format) {
         def actionManager = ActionManager.instance
         def visitor = new DataVisitor() {
             @Override
@@ -71,8 +72,12 @@ class GeneratorFacade {
         }
         profile.entries.removeAll(entriesToRemove)
 
-        // Generate PDF.
-        new Generator().generate(profile.entries, outputPath, keymap.presentableName)
+        // Generate PDF or CSV.
+        if (format == "PDF") {
+            new Generator().generate(profile.entries, outputPath, keymap.presentableName)
+        } else {
+            new CsvGenerator().generate(profile.entries, outputPath, keymap.presentableName)
+        }
     }
 
     @NotNull

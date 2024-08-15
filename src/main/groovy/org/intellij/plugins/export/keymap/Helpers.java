@@ -22,20 +22,21 @@ public class Helpers {
     }
 
     @Nullable
-    public static String validatePath(@Nullable String path, @NotNull String keymapName) {
+    public static String validatePath(@Nullable String path, @NotNull String keymapName, @NotNull String format) {
         if (path == null) {
-
             showError(Bundle.message("cannot.create.pdf.document"));
             return null;
         }
 
+        String fileExtension = format.toLowerCase();
         File file = new File(path);
         if (file.isFile()) {
             return null;
         }
         if (file.isDirectory()) {
             try {
-                return file.getCanonicalPath() + "/" + getProductName() + "-" + keymapName + "-keymap.pdf";
+                return file.getCanonicalPath() + "/" + getProductName() + "-" +
+                        keymapName + "-keymap." + fileExtension;
             } catch (IOException e) {
                 e.printStackTrace();
             }

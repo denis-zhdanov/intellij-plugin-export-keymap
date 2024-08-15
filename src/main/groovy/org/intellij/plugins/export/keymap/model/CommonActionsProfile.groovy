@@ -130,6 +130,7 @@ new ActionData(id: ['ShowUsages']),
 new Header(depth: 0, name: 'NAVIGATE CONTEXT'),
 new ActionData(id: ['SelectIn']),
 new ActionData(id: ['Switcher']),
+new ActionData(id: ['SwitchHeaderSource']),
 new ActionData(id: ['LocateInSolutionView']),
 new ActionData(id: ['RecentFiles','RecentChangedFiles'], description: 'Recently Viewed/Changed Files'),
 new ActionData(id: ['JumpToLastChange']),
@@ -149,6 +150,14 @@ new ActionData(id: ['GotoNextBookmark','GotoPreviousBookmark'], description: 'Ne
 new ActionData(id: ['ShowBookmarks']),
 new ActionData(id: ['ActivateFindToolWindow'], description: 'Find Tool Window'),
 new ActionData(id: ['ActivateBookmarksToolWindow'], description: 'Bookmarks Tool Window'),
+new ActionData(id: ['ActivateStructureToolWindow'], description: 'Structure Tool Window'),
+
+// AI actions
+
+new Header(depth: 0, name: 'ML-POWERED ASSISTANCE'),
+new ActionData(id: ['CallInlineCompletionAction'], description: 'Inline Completion'),
+new ActionData(id: ['AIAssistant.Editor.GenerateCodeInplace']),
+
 
 new ColumnBreak(),
 
@@ -175,6 +184,7 @@ new ActionData(id: ['ForceRunToCursor']),
 new ActionData(id: ['ShowExecutionPoint']),
 new ActionData(id: ['SetNextStatement']),
 new ActionData(id: ['EvaluateExpression']),
+new ActionData(id: ['NavigateToImmediateWindow'], description: 'Show Immediate Window'),
 new ActionData(id: ['Stop']),
 new ActionData(id: ['Resume']),
 //                breakpoints
